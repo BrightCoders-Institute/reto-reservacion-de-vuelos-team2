@@ -6,9 +6,10 @@
  */
 
 import React, {useEffect} from 'react';
-import {SafeAreaView, Text} from 'react-native';
+import {SafeAreaView, Text, View} from 'react-native';
 import {collection, getDocs} from 'firebase/firestore';
 import {database} from './src/db/firebase';
+import { SignUpScreen } from './src/screens/SignUpScreen';
 
 async function fethData() {
   const querySnapshot = await getDocs(collection(database, 'users'));
@@ -24,9 +25,9 @@ function App(): JSX.Element {
   }, []);
 
   return (
-    <SafeAreaView>
-      <Text>Hola mundo</Text>
-    </SafeAreaView>
+    <View>
+      <SignUpScreen />
+    </View>
   );
 }
 
