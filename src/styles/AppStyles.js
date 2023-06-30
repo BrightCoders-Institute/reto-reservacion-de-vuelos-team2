@@ -111,4 +111,30 @@ export const styles = StyleSheet.create({
     textDecorationLine: 'underline',
     color: 'blue',
   },
+
+  containerForgotPws: {
+    alignSelf: 'flex-end',
+    marginTop: 0,
+    marginRight: 5,
+  },
+
+  logo: {
+    alignSelf: 'center',
+    width: '90%',
+    maxWidth: 300,
+    height: 200,
+  },
+
+  title: {
+    fontSize: 21,
+    textAlign: 'center',
+    paddingTop: 0,
+    fontWeight: '500',
+    paddingVertical: 40,
+  },
+
+  titleFPwd: {
+    fontSize: 14,
+    color: 'blue',
+  },
 });
