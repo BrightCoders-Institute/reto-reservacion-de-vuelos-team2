@@ -8,7 +8,6 @@ export const ButtonComponent = ({onPressFn, isDisabled, children}) => {
       disabled={true}
       onPress={() => console.log('Sign Up')}
       style={styles.buttonSignUp}>
-      {/* <Text style={styles.buttonText}>Sign Up</Text> */}
       {children}
     </TouchableOpacity>
   );

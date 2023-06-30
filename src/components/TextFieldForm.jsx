@@ -38,6 +38,7 @@ export const TextFieldForm = ({
           style={styles.inputField}
           value={inputValue}
           onChangeText={onInputChange}
+          autoCapitalize="none"
         />
       );
     }
