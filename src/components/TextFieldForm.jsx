@@ -19,6 +19,7 @@ export const TextFieldForm = ({
             value={inputValue}
             onChangeText={onInputChange}
             secureTextEntry={!extraData.showPassword}
+            autoCapitalize="none"
           />
           <TouchableOpacity
             onPress={extraData.handleShowPassword}

@@ -64,7 +64,7 @@ export const LogInScreen = ({navigation}) => {
         </ButtonComponent>
       </View>
 
-      <View style={styles.logInTextContainer}>
+      <View style={[styles.logInTextContainer, {marginTop: 0}]}>
         <Text style={{fontSize: 16, marginTop: 8, color: '#888888'}}>
           Don't have an account?
         </Text>
@@ -73,7 +73,6 @@ export const LogInScreen = ({navigation}) => {
             style={{
               fontSize: 16,
               marginTop: 8,
-              color: '#888888',
               color: 'blue',
               textDecorationLine: 'underline',
             }}>
