@@ -63,8 +63,9 @@ export const SignUpScreen = ({navigation}) => {
           onCheckboxChange={handleTermsCheckbox}>
           <Text style={styles.textCheckbox}>
             I agree to the
-            <Text style={{textDecorationLine: 'underline'}}>Terms</Text> and
+            <Text style={{textDecorationLine: 'underline'}}> Terms</Text> and
             <Text style={{textDecorationLine: 'underline'}}>
+              {' '}
               Privacy Policy.
             </Text>{' '}
             <Text style={{color: 'red'}}>*</Text>

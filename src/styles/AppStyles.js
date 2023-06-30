@@ -2,7 +2,7 @@ import {StyleSheet} from 'react-native';
 
 export const styles = StyleSheet.create({
   container: {
-    marginTop: 32,
+    marginTop: 30,
     marginLeft: 24,
     marginRight: 24,
   },
@@ -14,7 +14,7 @@ export const styles = StyleSheet.create({
   },
   chekboxContainer: {
     marginTop: 29,
-    marginLeft: -5,
+    marginLeft: -0.5,
     height: '13%',
     display: 'flex',
     flexDirection: 'column',
@@ -83,7 +83,7 @@ export const styles = StyleSheet.create({
     height: 55,
   },
   fieldContainer: {
-    marginTop: 14,
+    marginTop: 10,
   },
   inputFieldContainer: {
     flexDirection: 'row',
@@ -114,27 +114,30 @@ export const styles = StyleSheet.create({
 
   containerForgotPws: {
     alignSelf: 'flex-end',
-    marginTop: 0,
+    marginTop: 1,
     marginRight: 5,
   },
 
   logo: {
     alignSelf: 'center',
     width: '90%',
-    maxWidth: 300,
+    maxWidth: 230,
     height: 200,
+    marginBottom: -20,
   },
 
   title: {
     fontSize: 21,
     textAlign: 'center',
-    paddingTop: 0,
     fontWeight: '500',
-    paddingVertical: 40,
+    paddingVertical: 1,
+    marginBottom: 25,
   },
 
   titleFPwd: {
+    paddingTop: 10,
     fontSize: 14,
     color: 'blue',
+    paddingBottom: 20,
   },
 });
