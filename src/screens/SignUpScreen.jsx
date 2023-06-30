@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
-import {View, Text, Image} from 'react-native';
+import {View, Text, Image, Pressable} from 'react-native';
 import {styles} from '../styles/AppStyles';
 import {TitleForm} from '../components/TitleForm';
 import {TextFieldForm} from '../components/TextFieldForm';
 import {CheckBoxComponent} from '../components/CheckBoxComponent';
 import {ButtonComponent} from '../components/ButtonComponent';
 
-export const SignUpScreen = () => {
+export const SignUpScreen = ({navigation}) => {
   const [firstName, setFirstName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -63,8 +63,9 @@ export const SignUpScreen = () => {
           onCheckboxChange={handleTermsCheckbox}>
           <Text style={styles.textCheckbox}>
             I agree to the
-            <Text style={{textDecorationLine: 'underline'}}>Terms</Text> and
+            <Text style={{textDecorationLine: 'underline'}}> Terms</Text> and
             <Text style={{textDecorationLine: 'underline'}}>
+              {' '}
               Privacy Policy.
             </Text>{' '}
             <Text style={{color: 'red'}}>*</Text>
@@ -106,9 +107,22 @@ export const SignUpScreen = () => {
       </View>
 
       <View style={styles.logInTextContainer}>
-        <Text style={styles.textSignIn}>
-          Already have an account? <Text style={styles.redirectSignUp}>Log In</Text>
+        <Text style={{fontSize: 16, marginTop: 8, color: '#888888'}}>
+          Already have an account?
         </Text>
+        <Pressable onPress={() => navigation.navigate('LogInScreen')}>
+          <Text
+            style={{
+              fontSize: 16,
+              marginTop: 8,
+              color: '#888888',
+              color: 'blue',
+              textDecorationLine: 'underline',
+            }}>
+            {' '}
+            Log In
+          </Text>
+        </Pressable>
       </View>
     </View>
   );

@@ -5,8 +5,11 @@
  * @format
  */
 
+import 'react-native-gesture-handler';
+import { NavigationContainer } from '@react-navigation/native';
+import { StackNavigator } from './src/navigator/StackNavigator';
 import React, {useEffect} from 'react';
-import {SafeAreaView, Text, View} from 'react-native';
+import {View} from 'react-native';
 import {collection, getDocs} from 'firebase/firestore';
 import {database} from './src/db/firebase';
 import { SignUpScreen } from './src/screens/SignUpScreen';
@@ -25,9 +28,9 @@ function App(): JSX.Element {
   }, []);
 
   return (
-    <View>
-      <SignUpScreen />
-    </View>
+    <NavigationContainer>
+      <StackNavigator />
+    </NavigationContainer>
   );
 }
 
