@@ -13,6 +13,7 @@ import {View} from 'react-native';
 import {collection, getDocs} from 'firebase/firestore';
 import {database} from './src/db/firebase';
 import { SignUpScreen } from './src/screens/SignUpScreen';
+import firestore from '@react-native-firebase/firestore';
 
 async function fethData() {
   const querySnapshot = await getDocs(collection(database, 'users'));
@@ -25,7 +26,14 @@ async function fethData() {
 function App(): JSX.Element {
   useEffect(() => {
     fethData();
+    getUser();
   }, []);
+
+  const getUser = async () => {
+    // const users = await firestore().collection('users').get();
+    const users = await firestore().collection('users').doc('ATB7K0PwuDPU2qq15apP').get();
+    console.log(users._data.first_name);
+  };
 
   return (
     <NavigationContainer>
