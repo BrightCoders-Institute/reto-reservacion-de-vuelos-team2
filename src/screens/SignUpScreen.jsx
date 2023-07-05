@@ -1,10 +1,11 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Text, Image, Pressable} from 'react-native';
 import {styles} from '../styles/AppStyles';
 import {TitleForm} from '../components/TitleForm';
 import {TextFieldForm} from '../components/TextFieldForm';
 import {CheckBoxComponent} from '../components/CheckBoxComponent';
 import {ButtonComponent} from '../components/ButtonComponent';
+import auth from '@react-native-firebase/auth';
 
 export const SignUpScreen = ({navigation}) => {
   const [firstName, setFirstName] = useState('');
@@ -13,6 +14,35 @@ export const SignUpScreen = ({navigation}) => {
   const [showPassword, setShowPassword] = useState(false);
   const [termsCheckbox, setTermsCheckbox] = useState(false);
   const [subscribeCheckbox, setSubscribeCheckbox] = useState(false);
+  const [isDesabledSignupBtn, setIsDesabledSignupBtn] = useState(true);
+  const [isDesabledGoogleSignupBtn, setIsDesabledGoogleSignupBtn] = useState(true);
+  const [isEmailValid, setIsEmailValid] = useState(false);
+  const [isPasswordValid, setIsPasswordValid] = useState(false);
+
+  useEffect(() => {
+    handleDesabledSignupButton();
+    handleDesabledGoogleSignupButton();
+  }, [email, password, termsCheckbox]);
+
+  const handleEmailChange = (email) => {
+    setEmail(email);
+
+    // email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const isValid = emailRegex.test(email);
+    setIsEmailValid(isValid);
+    // console.log('Correo electrónico válido:', isValid);
+  };
+
+  const handlePasswordChange = (pass) => {
+    setPassword(pass);
+
+    // password validation
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    const isValid = passwordRegex.test(pass);
+    setIsPasswordValid(isValid);
+    // console.log('Contraseña válida:', isValid);
+  };
 
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -24,6 +54,44 @@ export const SignUpScreen = ({navigation}) => {
 
   const handleSubscribeCheckbox = () => {
     setSubscribeCheckbox(!subscribeCheckbox);
+  };
+
+  const handleDesabledSignupButton = () => {
+    if ( isEmailValid && email.trim() !== '' && isPasswordValid && password.trim() !== '' && termsCheckbox ){
+      setIsDesabledSignupBtn(false);
+      return;
+    }
+    setIsDesabledSignupBtn(true);
+  };
+
+  const handleDesabledGoogleSignupButton = () => {
+    if (termsCheckbox !== false) {
+      setIsDesabledGoogleSignupBtn(false);
+      return;
+    }
+    setIsDesabledGoogleSignupBtn(true);
+  };
+
+  const signUpWithEmailAndPassword = () => {
+    auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then(() => {
+        console.log('User account created & signed in!');
+      })
+      .then(() => {
+        navigation.navigate('HomePageScreen');
+      })
+      .catch(error => {
+        if (error.code === 'auth/email-already-in-use') {
+          console.log('That email address is already in use!');
+        }
+
+        if (error.code === 'auth/invalid-email') {
+          console.log('That email address is invalid!');
+        }
+
+        console.error(error);
+      });
   };
 
   return (
@@ -39,13 +107,19 @@ export const SignUpScreen = ({navigation}) => {
       <TextFieldForm
         inputTitle="Email *"
         inputValue={email}
-        onInputChange={setEmail}
+        onInputChange={handleEmailChange}
+        invalidText="Please enter a valid email."
+        isInputValid={isEmailValid}
+        setInputValid={setIsEmailValid}
       />
 
       <TextFieldForm
         inputTitle="Password *"
         inputValue={password}
-        onInputChange={setPassword}
+        onInputChange={handlePasswordChange}
+        invalidText="Invalid password."
+        isInputValid={isPasswordValid}
+        setInputValid={setIsPasswordValid}
         extraData={{
           showPassword,
           handleShowPassword,
@@ -59,7 +133,7 @@ export const SignUpScreen = ({navigation}) => {
       <View style={styles.chekboxContainer}>
         <CheckBoxComponent
           checkboxValue={termsCheckbox}
-          tintColors={{true: 'blue', false: 'gray'}}
+          tintColors={{true: '#6270DE', false: 'gray'}}
           onCheckboxChange={handleTermsCheckbox}>
           <Text style={styles.textCheckbox}>
             I agree to the
@@ -84,8 +158,8 @@ export const SignUpScreen = ({navigation}) => {
 
       <View style={styles.buttonsContainer}>
         <ButtonComponent
-          onPressFn={() => console.log('Sign Up')}
-          isDisabled={true}>
+          onPressFn={signUpWithEmailAndPassword}
+          isDisabled={isDesabledSignupBtn}>
           <Text style={styles.buttonText}>Sign Up</Text>
         </ButtonComponent>
 
@@ -93,7 +167,7 @@ export const SignUpScreen = ({navigation}) => {
 
         <ButtonComponent
           onPressFn={() => console.log('Google button')}
-          isDisabled={true}>
+          isDisabled={isDesabledGoogleSignupBtn}>
           <View style={styles.googleTextContainer}>
             <Image
               style={styles.googleLogo}

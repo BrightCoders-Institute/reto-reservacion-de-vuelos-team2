@@ -5,9 +5,10 @@ import {styles} from '../styles/AppStyles';
 export const ButtonComponent = ({onPressFn, isDisabled, children}) => {
   return (
     <TouchableOpacity
-      disabled={true}
-      onPress={() => console.log('Sign Up')}
-      style={styles.buttonSignUp}>
+      disabled={isDisabled}
+      onPress={onPressFn}
+      style={[styles.buttonSignUp, isDisabled ? null : styles.btnEnabled]}
+    >
       {children}
     </TouchableOpacity>
   );

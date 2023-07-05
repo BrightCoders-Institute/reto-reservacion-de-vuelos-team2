@@ -66,6 +66,9 @@ export const styles = StyleSheet.create({
     width: '100%',
     height: '28%',
   },
+  btnEnabled: {
+    backgroundColor: '#899FFF',
+  },
   checkboxItemContainer: {
     display: 'flex',
     flexDirection: 'row',
@@ -140,5 +143,14 @@ export const styles = StyleSheet.create({
     fontSize: 14,
     color: 'blue',
     paddingBottom: 20,
+  },
+  focus: {
+    borderColor: '#5C65B1',
+  },
+  feedbackValidation: {
+    color: 'red',
+    fontSize: 12,
+    marginBottom: 10,
+    marginLeft: 5
   },
 });
