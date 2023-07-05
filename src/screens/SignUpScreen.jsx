@@ -5,6 +5,7 @@ import {TitleForm} from '../components/TitleForm';
 import {TextFieldForm} from '../components/TextFieldForm';
 import {CheckBoxComponent} from '../components/CheckBoxComponent';
 import {ButtonComponent} from '../components/ButtonComponent';
+import auth from '@react-native-firebase/auth';
 
 export const SignUpScreen = ({navigation}) => {
   const [firstName, setFirstName] = useState('');
@@ -71,6 +72,28 @@ export const SignUpScreen = ({navigation}) => {
     setIsDesabledGoogleSignupBtn(true);
   };
 
+  const signUpWithEmailAndPassword = () => {
+    auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then(() => {
+        console.log('User account created & signed in!');
+      })
+      .then(() => {
+        navigation.navigate('HomePageScreen');
+      })
+      .catch(error => {
+        if (error.code === 'auth/email-already-in-use') {
+          console.log('That email address is already in use!');
+        }
+
+        if (error.code === 'auth/invalid-email') {
+          console.log('That email address is invalid!');
+        }
+
+        console.error(error);
+      });
+  };
+
   return (
     <View style={styles.container}>
       <TitleForm title="Sign Up" />
@@ -135,7 +158,7 @@ export const SignUpScreen = ({navigation}) => {
 
       <View style={styles.buttonsContainer}>
         <ButtonComponent
-          onPressFn={() => console.log('Sign Up')}
+          onPressFn={signUpWithEmailAndPassword}
           isDisabled={isDesabledSignupBtn}>
           <Text style={styles.buttonText}>Sign Up</Text>
         </ButtonComponent>
