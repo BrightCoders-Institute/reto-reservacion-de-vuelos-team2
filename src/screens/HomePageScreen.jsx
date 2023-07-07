@@ -4,6 +4,7 @@ import React, {useState, useEffect} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import auth from '@react-native-firebase/auth';
 import {CardComponent} from '../components/Flights/CardComponent';
+import {FloatButtonComponent} from '../components/Flights/FloatButtonComponent';
 
 export const HomePageScreen = ({navigation}) => {
   // Set an initializing state whilst Firebase connects
@@ -49,10 +50,12 @@ export const HomePageScreen = ({navigation}) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>My flights</Text>
+      {/* Change for a flatlist */}
       <View style={styles.cardsContainer}>
         <CardComponent />
         <CardComponent />
       </View>
+      <FloatButtonComponent />
     </View>
   );
 };
