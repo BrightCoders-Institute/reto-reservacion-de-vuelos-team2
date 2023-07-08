@@ -1,4 +1,4 @@
-package com.newapp;
+package com.vuelosapp;
 import android.os.Bundle;
 
 import com.facebook.react.ReactActivity;
@@ -14,7 +14,7 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected String getMainComponentName() {
-    return "NewApp";
+    return "vuelosapp";
   }
   @Override
   protected void onCreate(Bundle savedInstanceState) {

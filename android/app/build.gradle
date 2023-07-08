@@ -74,9 +74,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.newapp"
+    namespace "com.vuelosapp"
     defaultConfig {
-        applicationId "com.newapp"
+        applicationId "com.vuelosapp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
