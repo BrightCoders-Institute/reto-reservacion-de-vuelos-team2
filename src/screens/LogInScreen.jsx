@@ -13,9 +13,9 @@ import {TextFieldForm} from '../components/TextFieldForm';
 import {ButtonComponent} from '../components/ButtonComponent';
 import auth from '@react-native-firebase/auth';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
-import { useForm } from '../hooks/useForm';
-import { useShowHidePassword } from '../hooks/useShowHidePassword';
-import { useEmailPassValidation } from '../hooks/useEmailPassValidation';
+import {useForm} from '../hooks/useForm';
+import {useShowHidePassword} from '../hooks/useShowHidePassword';
+import {useEmailPassValidation} from '../hooks/useEmailPassValidation';
 
 GoogleSignin.configure({
   webClientId: '230335521144-bkm22iosp953h1nqjsfn2a8fahifsilf.apps.googleusercontent.com',
@@ -27,16 +27,9 @@ export const LogInScreen = ({navigation}) => {
     password: '',
   });
   const {showPassword, handleShowPassword} = useShowHidePassword();
-  const { isEmailValid, isPasswordValid, setIsEmailValid, setIsPasswordValid, handleFieldValidation } = useEmailPassValidation();
-  // const [email, setEmail] = useState('');
-  // const [password, setPassword] = useState('');
-  // const [showPassword, setShowPassword] = useState(false);
+  const {isEmailValid, isPasswordValid, setIsEmailValid, setIsPasswordValid, handleFieldValidation} = useEmailPassValidation();
   const [isDesabledSignupBtn, setIsDesabledSignupBtn] = useState(true);
   const {height} = useWindowDimensions();
-
-  // const handleShowPassword = () => {
-  //   setShowPassword(!showPassword);
-  // };
 
   useEffect(() => {
     handleDesabledSignupButton();

@@ -21,7 +21,7 @@ export const SignUpScreen = ({navigation}) => {
     email: '',
     password: '',
   });
-  const {isEmailValid, isPasswordValid, setIsEmailValid, setIsPasswordValid, handleFieldValidation} = useEmailPassValidation();
+  const { isEmailValid, isPasswordValid, errorEmailText, errorPwText, setIsEmailValid, setIsPasswordValid, handleFieldValidation, setErrorEmailText, setErrorPwText } = useEmailPassValidation();
   const {showPassword, handleShowPassword} = useShowHidePassword();
   const [termsCheckbox, setTermsCheckbox] = useState(false);
   const [subscribeCheckbox, setSubscribeCheckbox] = useState(false);
@@ -77,9 +77,16 @@ export const SignUpScreen = ({navigation}) => {
       .catch(error => {
         if (error.code === 'auth/email-already-in-use') {
           console.log('That email address is already in use!');
+          setIsEmailValid(false);
+          setErrorEmailText('Email in use. Use a different email.');
         }
 
         if (error.code === 'auth/invalid-email') {
+          setIsEmailValid(false);
+          setErrorEmailText('The mail address is badly formatted');
+        }
+
+        if (error.code === 'auth/wrong-password') {
           console.log('That email address is invalid!');
         }
 
@@ -117,7 +124,7 @@ export const SignUpScreen = ({navigation}) => {
         inputTitle="Email *"
         inputValue={email}
         onInputChange={(value) => handleInputChangeAndValidation('email', value)}
-        invalidText="Please enter a valid email."
+        invalidText={errorEmailText}
         isInputValid={isEmailValid}
         setInputValid={setIsEmailValid}
       />
@@ -126,7 +133,7 @@ export const SignUpScreen = ({navigation}) => {
         inputTitle="Password *"
         inputValue={password}
         onInputChange={(value) => handleInputChangeAndValidation('password', value)}
-        invalidText="Invalid password."
+        invalidText={errorPwText}
         isInputValid={isPasswordValid}
         setInputValid={setIsPasswordValid}
         extraData={{
