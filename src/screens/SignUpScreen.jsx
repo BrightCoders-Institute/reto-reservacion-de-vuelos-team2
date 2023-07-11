@@ -6,6 +6,11 @@ import {TextFieldForm} from '../components/TextFieldForm';
 import {CheckBoxComponent} from '../components/CheckBoxComponent';
 import {ButtonComponent} from '../components/ButtonComponent';
 import auth from '@react-native-firebase/auth';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
+
+GoogleSignin.configure({
+  webClientId: '230335521144-bkm22iosp953h1nqjsfn2a8fahifsilf.apps.googleusercontent.com',
+});
 
 export const SignUpScreen = ({navigation}) => {
   const [firstName, setFirstName] = useState('');
@@ -94,6 +99,25 @@ export const SignUpScreen = ({navigation}) => {
       });
   };
 
+  async function signUpWithGoogle() {
+    // Check if your device supports Google Play
+    // const res = await auth().signOut();
+    // console.log(res);
+    await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+
+    // Cerrar sesión de google para que pregunte el correo.
+    await GoogleSignin.signOut();
+    // Get the users ID token
+    const { idToken } = await GoogleSignin.signIn();
+  
+    // Create a Google credential with the token
+    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+  
+    // Sign-in the user with the credential
+    navigation.navigate('HomePageScreen');
+    return auth().signInWithCredential(googleCredential);
+  };
+
   return (
     <View style={styles.container}>
       <TitleForm title="Sign Up" />
@@ -166,7 +190,7 @@ export const SignUpScreen = ({navigation}) => {
         <Text style={{fontSize: 15, color: '#888888'}}>or</Text>
 
         <ButtonComponent
-          onPressFn={() => console.log('Google button')}
+          onPressFn={signUpWithGoogle}
           isDisabled={isDesabledGoogleSignupBtn}>
           <View style={styles.googleTextContainer}>
             <Image
