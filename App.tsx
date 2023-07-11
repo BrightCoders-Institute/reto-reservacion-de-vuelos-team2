@@ -25,14 +25,14 @@ async function fethData() {
 
 function App(): JSX.Element {
   useEffect(() => {
-    fethData();
+    // fethData();
     getUser();
   }, []);
 
   const getUser = async () => {
     // const users = await firestore().collection('users').get();
-    const users = await firestore().collection('users').doc('ATB7K0PwuDPU2qq15apP').get();
-    console.log(users._data.first_name);
+    const users = await firestore().collection('users').doc('DZCIDhF1RnCzbHwflrQB').get();
+    console.log(users._data.name);
   };
 
   return (

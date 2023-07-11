@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-shadow */
 import React, {useState, useEffect} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, Button} from 'react-native';
 import auth from '@react-native-firebase/auth';
 import {CardComponent} from '../components/Flights/CardComponent';
 import {FloatButtonComponent} from '../components/Flights/FloatButtonComponent';
@@ -56,6 +56,7 @@ export const HomePageScreen = ({navigation}) => {
         <CardComponent />
       </View>
       <FloatButtonComponent />
+      <Button title='SignOff' onPress={ handleLogOut } />
     </View>
   );
 };
