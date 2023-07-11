@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Text,
   View,
@@ -13,19 +13,46 @@ import {TextFieldForm} from '../components/TextFieldForm';
 import {ButtonComponent} from '../components/ButtonComponent';
 import auth from '@react-native-firebase/auth';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import { useForm } from '../hooks/useForm';
+import { useShowHidePassword } from '../hooks/useShowHidePassword';
+import { useEmailPassValidation } from '../hooks/useEmailPassValidation';
 
 GoogleSignin.configure({
   webClientId: '230335521144-bkm22iosp953h1nqjsfn2a8fahifsilf.apps.googleusercontent.com',
 });
 
 export const LogInScreen = ({navigation}) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
+  const {email, password, onResetForm, onInputChange} = useForm({
+    email: '',
+    password: '',
+  });
+  const {showPassword, handleShowPassword} = useShowHidePassword();
+  const { isEmailValid, isPasswordValid, setIsEmailValid, setIsPasswordValid, handleFieldValidation } = useEmailPassValidation();
+  // const [email, setEmail] = useState('');
+  // const [password, setPassword] = useState('');
+  // const [showPassword, setShowPassword] = useState(false);
+  const [isDesabledSignupBtn, setIsDesabledSignupBtn] = useState(true);
   const {height} = useWindowDimensions();
 
-  const handleShowPassword = () => {
-    setShowPassword(!showPassword);
+  // const handleShowPassword = () => {
+  //   setShowPassword(!showPassword);
+  // };
+
+  useEffect(() => {
+    handleDesabledSignupButton();
+  }, [email, password]);
+
+  const handleInputChangeAndValidation = (name, value) => {
+    onInputChange(name, value);
+    handleFieldValidation(name, value);
+  };
+
+  const handleDesabledSignupButton = () => {
+    if( isEmailValid && email.trim() !== '' && isPasswordValid && password.trim() !== ''){
+      setIsDesabledSignupBtn(false);
+      return;
+    }
+    setIsDesabledSignupBtn(true);
   };
 
   const logInWithEmailAndPassword = () => {
@@ -77,13 +104,19 @@ export const LogInScreen = ({navigation}) => {
         <TextFieldForm
           inputTitle="Email *"
           inputValue={email}
-          onInputChange={setEmail}
+          onInputChange={(value) => handleInputChangeAndValidation('email', value)}
+          invalidText="Please enter a valid email."
+          isInputValid={isEmailValid}
+          setInputValid={setIsEmailValid}
         />
 
         <TextFieldForm
           inputTitle="Password *"
           inputValue={password}
-          onInputChange={setPassword}
+          onInputChange={(value) => handleInputChangeAndValidation('password', value)}
+          invalidText="Invalid password."
+          isInputValid={isPasswordValid}
+          setInputValid={setIsPasswordValid}
           extraData={{
             showPassword,
             handleShowPassword,
@@ -100,7 +133,7 @@ export const LogInScreen = ({navigation}) => {
       <View style={styles.buttonsContainer}>
         <ButtonComponent
           onPressFn={logInWithEmailAndPassword}
-          isDisabled={false}>
+          isDisabled={isDesabledSignupBtn}>
           <Text style={styles.buttonText}>Log In</Text>
         </ButtonComponent>
 
