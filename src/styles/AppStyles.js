@@ -157,7 +157,6 @@ export const styles = StyleSheet.create({
   // -------------------- ESTILOS LOADER --------------------
   loderContainer: {
     flex: 1,
-    // display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -168,11 +167,8 @@ export const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   loadingContent: {
-    // flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    // backgroundColor: '#343434',
-    // backgroundColor: '#393E51',
     backgroundColor: '#2F3446',
     width: '33%',
     height: '23%',
