@@ -93,18 +93,36 @@ export const LogInScreen = ({navigation}) => {
       });
   };
 
-  async function logInWithGoogle() {
-    await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true});
-
-    // Get the users ID token
-    const {idToken} = await GoogleSignin.signIn();
-
-    // Create a Google credential with the token
-    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-
-    // Sign-in the user with the credential
-    navigation.navigate('HomePageScreen');
-    return auth().signInWithCredential(googleCredential);
+  function logInWithGoogle() {
+    setIsLoadingDisplayed(true);
+    setIsLoading(true);
+    GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true})
+      .then(() => {
+        setIsLoadingDisplayed(true);
+        setIsLoading(true);
+        return GoogleSignin.signIn();
+      })
+      .then(({idToken}) => {
+        setIsSuccess(true);
+        const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+        return auth().signInWithCredential(googleCredential);
+      })
+      .then(() => {
+        setIsLoading(false);
+        setTimeout(() => {
+          setIsLoadingDisplayed(false);
+          onResetForm();
+          navigation.navigate('HomePageScreen');
+        }, 1500);
+      })
+      .catch(error => {
+        setIsLoading(false);
+        setIsSuccess(false);
+        setTimeout(() => {
+          setIsLoadingDisplayed(false);
+          console.error(error);
+        }, 1500);
+      });
   };
 
   return (
@@ -115,7 +133,6 @@ export const LogInScreen = ({navigation}) => {
         isLoading={isLoading}
         loadingFinishText={isSuccess ? 'Logged In' : 'Error'}
         isSuccess={isSuccess}
-        closeModalFn={setIsLoadingDisplayed}
       />
       <Image
         source={Logo}

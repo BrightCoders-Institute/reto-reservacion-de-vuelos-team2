@@ -9,8 +9,6 @@ export const Loader = ({
   isLoading,
   loadingFinishText,
   isSuccess,
-  closeModal,
-  reset,
 }) => {
   const selectLoaderContent = () => {
     const renderSuccessOrErrorMsg = () => {

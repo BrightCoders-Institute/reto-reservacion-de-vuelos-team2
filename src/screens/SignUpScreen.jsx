@@ -106,46 +106,45 @@ export const SignUpScreen = ({navigation}) => {
           }
           console.error(error);
         }, 1500);
-      })
-      .finally(() => {
-        // setIsLoading(false);
-        // setTimeout(() => {
-        //     setIsLoadingDisplayed(false);
-        //     onResetForm();
-        //     handleTermsCheckbox();
-        //     setSubscribeCheckbox(false);
-        //     navigation.navigate('LogInApp');
-        // }, 1000);
       });
   };
 
-  async function signUpWithGoogle() {
-    try {
-      await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true});
-
-      // Cerrar sesión de google para que pregunte el correo.
-      await GoogleSignin.signOut();
-      setIsLoadingDisplayed(true);
-      setIsLoading(true);
-      // Get the users ID token
-      const {idToken} = await GoogleSignin.signIn();
-
-      // Create a Google credential with the token
-      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-
-      // Sign-in the user with the credential
-      return auth().signInWithCredential(googleCredential);
-    } catch (error) {
-      // Manejo de errores
-    } finally {
-      setTimeout(() => {
-        setIsLoadingDisplayed(false);
+  function signUpWithGoogle() {
+    setIsLoadingDisplayed(true);
+    setIsLoading(true);
+    GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true})
+      .then(() => {
         onResetForm();
-        handleTermsCheckbox();
-        setSubscribeCheckbox(false);
-        navigation.navigate('HomePageScreen');
-      }, 1500);
-    }
+        return GoogleSignin.signOut();
+      })
+      .then(() => {
+        setIsLoadingDisplayed(true);
+        setIsLoading(true);
+        return GoogleSignin.signIn();
+      })
+      .then(({idToken}) => {
+        setIsSuccess(true);
+        const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+        return auth().signInWithCredential(googleCredential);
+      })
+      .then(() => {
+        setIsLoading(false);
+        setTimeout(() => {
+          setIsLoadingDisplayed(false);
+          onResetForm();
+          handleTermsCheckbox();
+          setSubscribeCheckbox(false);
+          navigation.navigate('HomePageScreen');
+        }, 1500);
+      })
+      .catch(error => {
+        setIsLoading(false);
+        setIsSuccess(false);
+        setTimeout(() => {
+          setIsLoadingDisplayed(false);
+          console.error(error);
+        }, 1500);
+      });
   };
 
   return (
@@ -156,7 +155,6 @@ export const SignUpScreen = ({navigation}) => {
         isLoading={isLoading}
         loadingFinishText={isSuccess ? 'Signed Up' : 'Error!'}
         isSuccess={isSuccess}
-        closeModalFn={setIsLoadingDisplayed}
       />
 
       <TitleForm title="Sign Up" />
