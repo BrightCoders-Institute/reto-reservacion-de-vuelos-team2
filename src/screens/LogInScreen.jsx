@@ -11,6 +11,12 @@ import {styles} from '../styles/AppStyles';
 import Logo from '../assets/img/logoAbc.png';
 import {TextFieldForm} from '../components/TextFieldForm';
 import {ButtonComponent} from '../components/ButtonComponent';
+import auth from '@react-native-firebase/auth';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
+
+GoogleSignin.configure({
+  webClientId: '230335521144-bkm22iosp953h1nqjsfn2a8fahifsilf.apps.googleusercontent.com',
+});
 
 export const LogInScreen = ({navigation}) => {
   const [email, setEmail] = useState('');
@@ -20,6 +26,28 @@ export const LogInScreen = ({navigation}) => {
 
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
+  };
+
+  const logInWithEmailAndPassword = () => {
+    auth()
+      .signInWithEmailAndPassword(email, password)
+      .then(() => {
+        console.log('User account created & signed in!');
+      })
+      .then(() => {
+        navigation.navigate('HomePageScreen');
+      })
+      .catch(error => {
+        if (error.code === 'auth/email-already-in-use') {
+          console.log('That email address is already in use!');
+        }
+
+        if (error.code === 'auth/invalid-email') {
+          console.log('That email address is invalid!');
+        }
+
+        console.error(error);
+      });
   };
 
   return (
@@ -57,8 +85,8 @@ export const LogInScreen = ({navigation}) => {
 
       <View style={styles.buttonsContainer}>
         <ButtonComponent
-          onPressFn={() => console.log('Log In')}
-          isDisabled={true}>
+          onPressFn={logInWithEmailAndPassword}
+          isDisabled={false}>
           <Text style={styles.buttonText}>Log In</Text>
         </ButtonComponent>
 
