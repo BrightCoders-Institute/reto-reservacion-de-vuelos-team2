@@ -27,7 +27,7 @@ export const LogInScreen = ({navigation}) => {
     password: '',
   });
   const {showPassword, handleShowPassword} = useShowHidePassword();
-  const {isEmailValid, isPasswordValid, setIsEmailValid, setIsPasswordValid, handleFieldValidation} = useEmailPassValidation();
+  const { isEmailValid, isPasswordValid, errorEmailText, errorPwText, setIsEmailValid, setIsPasswordValid, handleFieldValidation, setErrorEmailText, setErrorPwText } = useEmailPassValidation();
   const [isDesabledSignupBtn, setIsDesabledSignupBtn] = useState(true);
   const {height} = useWindowDimensions();
 
@@ -55,15 +55,23 @@ export const LogInScreen = ({navigation}) => {
         console.log('User account created & signed in!');
       })
       .then(() => {
+        onResetForm();
         navigation.navigate('HomePageScreen');
       })
       .catch(error => {
-        if (error.code === 'auth/email-already-in-use') {
-          console.log('That email address is already in use!');
+        if (error.code === 'auth/user-not-found') {
+          setIsEmailValid(false);
+          setErrorEmailText('No account for this email. Sign up please.');
         }
 
         if (error.code === 'auth/invalid-email') {
-          console.log('That email address is invalid!');
+          setIsEmailValid(false);
+          setErrorEmailText('The mail address is badly formatted');
+        }
+
+        if (error.code === 'auth/wrong-password') {
+          setIsPasswordValid(false);
+          setErrorPwText('Incorrect password.');
         }
 
         console.error(error);
@@ -98,7 +106,7 @@ export const LogInScreen = ({navigation}) => {
           inputTitle="Email *"
           inputValue={email}
           onInputChange={(value) => handleInputChangeAndValidation('email', value)}
-          invalidText="Please enter a valid email."
+          invalidText={errorEmailText}
           isInputValid={isEmailValid}
           setInputValid={setIsEmailValid}
         />
@@ -107,7 +115,7 @@ export const LogInScreen = ({navigation}) => {
           inputTitle="Password *"
           inputValue={password}
           onInputChange={(value) => handleInputChangeAndValidation('password', value)}
-          invalidText="Invalid password."
+          invalidText={errorPwText}
           isInputValid={isPasswordValid}
           setInputValid={setIsPasswordValid}
           extraData={{
