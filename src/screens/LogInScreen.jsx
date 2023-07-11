@@ -50,6 +50,20 @@ export const LogInScreen = ({navigation}) => {
       });
   };
 
+  async function logInWithGoogle() {
+    await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true});
+
+    // Get the users ID token
+    const {idToken} = await GoogleSignin.signIn();
+
+    // Create a Google credential with the token
+    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+
+    // Sign-in the user with the credential
+    navigation.navigate('HomePageScreen');
+    return auth().signInWithCredential(googleCredential);
+  };
+
   return (
     <View style={styles.container}>
       <Image
@@ -93,8 +107,8 @@ export const LogInScreen = ({navigation}) => {
         <Text style={{fontSize: 15, color: '#888888'}}>or</Text>
 
         <ButtonComponent
-          onPressFn={() => console.log('Google button')}
-          isDisabled={true}>
+          onPressFn={logInWithGoogle}
+          isDisabled={false}>
           <View style={styles.googleTextContainer}>
             <Image
               style={styles.googleLogo}
