@@ -14,27 +14,26 @@ export const Loader = ({
 }) => {
   const selectLoaderContent = () => {
     const renderSuccessOrErrorMsg = () => {
-        if(isSuccess) {
-            return (
-                <View>
-                    <Icon name="check-circle" size={95} color="#607AEE" />
-                    <Text
-                        style={{color: '#607AEE', marginTop: 20, textAlign: 'center'}}>
-                        {loadingFinishText}
-                    </Text>
-                </View>
-            );
-        } else {
-            return (
-                <View>
-                    <Icon name="x-circle" size={95} color="red" />
-                    <Text
-                        style={{color: 'red', marginTop: 20, textAlign: 'center'}}>
-                        {loadingFinishText}
-                    </Text>
-                </View>
-            );
-        }
+      if (isSuccess) {
+        return (
+          <View>
+            <Icon name="check-circle" size={95} color="#607AEE" style={{textAlign: 'center'}} />
+            <Text
+              style={{color: '#607AEE', marginTop: 20, textAlign: 'center', fontSize: 16}}>
+              {loadingFinishText}
+            </Text>
+          </View>
+        );
+      } else {
+        return (
+          <View>
+            <Icon name="x-circle" size={95} color="#FF0909" style={{textAlign: 'center'}} />
+            <Text style={{color: '#FF0909', marginTop: 20, textAlign: 'center', fontWeight: 'bold', fontSize: 18}}>
+              {loadingFinishText}
+            </Text>
+          </View>
+        );
+      }
     };
     return (
       <View style={styles.loadingContent}>
@@ -42,19 +41,12 @@ export const Loader = ({
           <View>
             <ActivityIndicator size={110} color="#607AEE" />
             <Text
-              style={{color: '#607AEE', marginTop: 20, textAlign: 'center'}}>
+              style={{color: '#607AEE', marginTop: 20, textAlign: 'center', fontSize: 16}}>
               {loadingText}
             </Text>
           </View>
         ) : (
           renderSuccessOrErrorMsg()
-        //   <View>
-        //     <Icon name="check-circle" size={95} color="#607AEE" />
-        //     <Text
-        //       style={{color: '#607AEE', marginTop: 20, textAlign: 'center'}}>
-        //       {loadingFinishText}
-        //     </Text>
-        //   </View>
         )}
       </View>
     );
@@ -63,12 +55,10 @@ export const Loader = ({
   return (
     <View>
       <Modal
-        // animationType='none'
         transparent={true}
         visible={openModal}
         style={styles.loderContainer}>
         <View style={styles.overlay}>
-          {/* {isLoadingDisplayed && <LoaderScreen loadingText="Signing up..." loadingFinishText="Signed Up" isLoading={isLoading} closeModal={setIsLoadingDisplayed} reset={setIsLoading} />} */}
           {openModal ? selectLoaderContent() : null}
         </View>
       </Modal>

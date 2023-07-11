@@ -83,7 +83,7 @@ export const SignUpScreen = ({navigation}) => {
           handleTermsCheckbox();
           setSubscribeCheckbox(false);
           navigation.navigate('HomePageScreen');
-        }, 2000);
+        }, 1500);
       })
       .catch(error => {
         setIsLoading(false);
@@ -105,7 +105,7 @@ export const SignUpScreen = ({navigation}) => {
             setIsLoadingDisplayed(false);
           }
           console.error(error);
-        }, 2000);
+        }, 1500);
       })
       .finally(() => {
         // setIsLoading(false);
@@ -154,7 +154,7 @@ export const SignUpScreen = ({navigation}) => {
         openModal={isLoadingDisplayed}
         loadingText='Signing up...'
         isLoading={isLoading}
-        loadingFinishText={isSuccess ? 'Signed Up' : 'Error'}
+        loadingFinishText={isSuccess ? 'Signed Up' : 'Error!'}
         isSuccess={isSuccess}
         closeModalFn={setIsLoadingDisplayed}
       />

@@ -16,6 +16,7 @@ import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {useForm} from '../hooks/useForm';
 import {useShowHidePassword} from '../hooks/useShowHidePassword';
 import {useEmailPassValidation} from '../hooks/useEmailPassValidation';
+import { Loader } from '../components/Loader';
 
 GoogleSignin.configure({
   webClientId: '230335521144-bkm22iosp953h1nqjsfn2a8fahifsilf.apps.googleusercontent.com',
@@ -29,6 +30,9 @@ export const LogInScreen = ({navigation}) => {
   const {showPassword, handleShowPassword} = useShowHidePassword();
   const { isEmailValid, isPasswordValid, errorEmailText, errorPwText, setIsEmailValid, setIsPasswordValid, handleFieldValidation, setErrorEmailText, setErrorPwText } = useEmailPassValidation();
   const [isDesabledSignupBtn, setIsDesabledSignupBtn] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingDisplayed, setIsLoadingDisplayed] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
   const {height} = useWindowDimensions();
 
   useEffect(() => {
@@ -49,32 +53,43 @@ export const LogInScreen = ({navigation}) => {
   };
 
   const logInWithEmailAndPassword = () => {
+    setIsLoadingDisplayed(true);
+    setIsLoading(true);
     auth()
       .signInWithEmailAndPassword(email, password)
       .then(() => {
         console.log('User account created & signed in!');
+        setIsSuccess(true);
       })
       .then(() => {
-        onResetForm();
-        navigation.navigate('HomePageScreen');
+        setIsLoading(false);
+        setTimeout(() => {
+          setIsLoadingDisplayed(false);
+          onResetForm();
+          navigation.navigate('HomePageScreen');
+        }, 1500);
       })
       .catch(error => {
-        if (error.code === 'auth/user-not-found') {
-          setIsEmailValid(false);
-          setErrorEmailText('No account for this email. Sign up please.');
-        }
+        setIsLoading(false);
+        setIsSuccess(false);
+        setTimeout(() => {
+          setIsLoadingDisplayed(false);
+          if (error.code === 'auth/user-not-found') {
+            setIsEmailValid(false);
+            setErrorEmailText('No account for this email. Sign up please.');
+          }
 
-        if (error.code === 'auth/invalid-email') {
-          setIsEmailValid(false);
-          setErrorEmailText('The mail address is badly formatted');
-        }
+          if (error.code === 'auth/invalid-email') {
+            setIsEmailValid(false);
+            setErrorEmailText('The mail address is badly formatted');
+          }
 
-        if (error.code === 'auth/wrong-password') {
-          setIsPasswordValid(false);
-          setErrorPwText('Incorrect password.');
-        }
-
-        console.error(error);
+          if (error.code === 'auth/wrong-password') {
+            setIsPasswordValid(false);
+            setErrorPwText('Incorrect password.');
+          }
+          console.error(error);
+        }, 1500);
       });
   };
 
@@ -94,6 +109,14 @@ export const LogInScreen = ({navigation}) => {
 
   return (
     <View style={styles.container}>
+      <Loader
+        openModal={isLoadingDisplayed}
+        loadingText='Logging in...'
+        isLoading={isLoading}
+        loadingFinishText={isSuccess ? 'Logged In' : 'Error'}
+        isSuccess={isSuccess}
+        closeModalFn={setIsLoadingDisplayed}
+      />
       <Image
         source={Logo}
         style={[styles.logo, {height: height * 0.3}]}
