@@ -10,6 +10,7 @@ import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {useForm} from '../hooks/useForm';
 import {useEmailPassValidation} from '../hooks/useEmailPassValidation';
 import {useShowHidePassword} from '../hooks/useShowHidePassword';
+import {Loader} from '../components/Loader';
 
 GoogleSignin.configure({
   webClientId: '230335521144-bkm22iosp953h1nqjsfn2a8fahifsilf.apps.googleusercontent.com',
@@ -27,6 +28,9 @@ export const SignUpScreen = ({navigation}) => {
   const [subscribeCheckbox, setSubscribeCheckbox] = useState(false);
   const [isDesabledSignupBtn, setIsDesabledSignupBtn] = useState(true);
   const [isDesabledGoogleSignupBtn, setIsDesabledGoogleSignupBtn] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingDisplayed, setIsLoadingDisplayed] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   useEffect(() => {
     handleDesabledSignupButton();
@@ -63,55 +67,98 @@ export const SignUpScreen = ({navigation}) => {
   };
 
   const signUpWithEmailAndPassword = () => {
+    setIsLoadingDisplayed(true);
+    setIsLoading(true);
     auth()
       .createUserWithEmailAndPassword(email, password)
       .then(() => {
         console.log('User account created & signed in!');
+        setIsSuccess(true);
       })
       .then(() => {
-        onResetForm();
-        handleTermsCheckbox();
-        setSubscribeCheckbox(false);
-        navigation.navigate('HomePageScreen');
+        setIsLoading(false);
+        setTimeout(() => {
+          setIsLoadingDisplayed(false);
+          onResetForm();
+          handleTermsCheckbox();
+          setSubscribeCheckbox(false);
+          navigation.navigate('HomePageScreen');
+        }, 2000);
       })
       .catch(error => {
-        if (error.code === 'auth/email-already-in-use') {
-          console.log('That email address is already in use!');
-          setIsEmailValid(false);
-          setErrorEmailText('Email in use. Use a different email.');
-        }
+        setIsLoading(false);
+        setIsSuccess(false);
+        setTimeout(() => {
+          setIsLoadingDisplayed(false);
+          if (error.code === 'auth/email-already-in-use') {
+            console.log('That email address is already in use!');
+            setIsEmailValid(false);
+            setErrorEmailText('Email in use. Use a different email.');
+            setIsLoadingDisplayed(false);
+            setIsLoadingDisplayed(false);
+          }
 
-        if (error.code === 'auth/invalid-email') {
-          setIsEmailValid(false);
-          setErrorEmailText('The mail address is badly formatted');
-        }
-
-        if (error.code === 'auth/wrong-password') {
-          console.log('That email address is invalid!');
-        }
-
-        console.error(error);
+          if (error.code === 'auth/invalid-email') {
+            setIsEmailValid(false);
+            setErrorEmailText('The mail address is badly formatted');
+            setIsLoadingDisplayed(false);
+            setIsLoadingDisplayed(false);
+          }
+          console.error(error);
+        }, 2000);
+      })
+      .finally(() => {
+        // setIsLoading(false);
+        // setTimeout(() => {
+        //     setIsLoadingDisplayed(false);
+        //     onResetForm();
+        //     handleTermsCheckbox();
+        //     setSubscribeCheckbox(false);
+        //     navigation.navigate('LogInApp');
+        // }, 1000);
       });
   };
 
   async function signUpWithGoogle() {
-    await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true});
+    try {
+      await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true});
 
-    // Cerrar sesión de google para que pregunte el correo.
-    await GoogleSignin.signOut();
-    // Get the users ID token
-    const {idToken} = await GoogleSignin.signIn();
+      // Cerrar sesión de google para que pregunte el correo.
+      await GoogleSignin.signOut();
+      setIsLoadingDisplayed(true);
+      setIsLoading(true);
+      // Get the users ID token
+      const {idToken} = await GoogleSignin.signIn();
 
-    // Create a Google credential with the token
-    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+      // Create a Google credential with the token
+      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
 
-    // Sign-in the user with the credential
-    navigation.navigate('HomePageScreen');
-    return auth().signInWithCredential(googleCredential);
+      // Sign-in the user with the credential
+      return auth().signInWithCredential(googleCredential);
+    } catch (error) {
+      // Manejo de errores
+    } finally {
+      setTimeout(() => {
+        setIsLoadingDisplayed(false);
+        onResetForm();
+        handleTermsCheckbox();
+        setSubscribeCheckbox(false);
+        navigation.navigate('HomePageScreen');
+      }, 1500);
+    }
   };
 
   return (
     <View style={styles.container}>
+      <Loader
+        openModal={isLoadingDisplayed}
+        loadingText='Signing up...'
+        isLoading={isLoading}
+        loadingFinishText={isSuccess ? 'Signed Up' : 'Error'}
+        isSuccess={isSuccess}
+        closeModalFn={setIsLoadingDisplayed}
+      />
+
       <TitleForm title="Sign Up" />
 
       <TextFieldForm
