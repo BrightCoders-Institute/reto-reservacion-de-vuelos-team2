@@ -7,50 +7,35 @@ import {CheckBoxComponent} from '../components/CheckBoxComponent';
 import {ButtonComponent} from '../components/ButtonComponent';
 import auth from '@react-native-firebase/auth';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import {useForm} from '../hooks/useForm';
+import {useEmailPassValidation} from '../hooks/useEmailPassValidation';
+import {useShowHidePassword} from '../hooks/useShowHidePassword';
 
 GoogleSignin.configure({
   webClientId: '230335521144-bkm22iosp953h1nqjsfn2a8fahifsilf.apps.googleusercontent.com',
 });
 
 export const SignUpScreen = ({navigation}) => {
-  const [firstName, setFirstName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
+  const {firstName, email, password, onResetForm, onInputChange} = useForm({
+    firstName: '',
+    email: '',
+    password: '',
+  });
+  const {isEmailValid, isPasswordValid, setIsEmailValid, setIsPasswordValid, handleFieldValidation} = useEmailPassValidation();
+  const {showPassword, handleShowPassword} = useShowHidePassword();
   const [termsCheckbox, setTermsCheckbox] = useState(false);
   const [subscribeCheckbox, setSubscribeCheckbox] = useState(false);
   const [isDesabledSignupBtn, setIsDesabledSignupBtn] = useState(true);
   const [isDesabledGoogleSignupBtn, setIsDesabledGoogleSignupBtn] = useState(true);
-  const [isEmailValid, setIsEmailValid] = useState(false);
-  const [isPasswordValid, setIsPasswordValid] = useState(false);
 
   useEffect(() => {
     handleDesabledSignupButton();
     handleDesabledGoogleSignupButton();
   }, [email, password, termsCheckbox]);
 
-  const handleEmailChange = (email) => {
-    setEmail(email);
-
-    // email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const isValid = emailRegex.test(email);
-    setIsEmailValid(isValid);
-    // console.log('Correo electrónico válido:', isValid);
-  };
-
-  const handlePasswordChange = (pass) => {
-    setPassword(pass);
-
-    // password validation
-    const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-    const isValid = passwordRegex.test(pass);
-    setIsPasswordValid(isValid);
-    // console.log('Contraseña válida:', isValid);
-  };
-
-  const handleShowPassword = () => {
-    setShowPassword(!showPassword);
+  const handleInputChangeAndValidation = (name, value) => {
+    onInputChange(name, value);
+    handleFieldValidation(name, value);
   };
 
   const handleTermsCheckbox = () => {
@@ -62,7 +47,7 @@ export const SignUpScreen = ({navigation}) => {
   };
 
   const handleDesabledSignupButton = () => {
-    if ( isEmailValid && email.trim() !== '' && isPasswordValid && password.trim() !== '' && termsCheckbox ){
+    if (isEmailValid && email.trim() !== '' && isPasswordValid && password.trim() !== '' && termsCheckbox){
       setIsDesabledSignupBtn(false);
       return;
     }
@@ -84,6 +69,9 @@ export const SignUpScreen = ({navigation}) => {
         console.log('User account created & signed in!');
       })
       .then(() => {
+        onResetForm();
+        handleTermsCheckbox();
+        setSubscribeCheckbox(false);
         navigation.navigate('HomePageScreen');
       })
       .catch(error => {
@@ -100,19 +88,16 @@ export const SignUpScreen = ({navigation}) => {
   };
 
   async function signUpWithGoogle() {
-    // Check if your device supports Google Play
-    // const res = await auth().signOut();
-    // console.log(res);
-    await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+    await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true});
 
     // Cerrar sesión de google para que pregunte el correo.
     await GoogleSignin.signOut();
     // Get the users ID token
-    const { idToken } = await GoogleSignin.signIn();
-  
+    const {idToken} = await GoogleSignin.signIn();
+
     // Create a Google credential with the token
     const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-  
+
     // Sign-in the user with the credential
     navigation.navigate('HomePageScreen');
     return auth().signInWithCredential(googleCredential);
@@ -125,13 +110,13 @@ export const SignUpScreen = ({navigation}) => {
       <TextFieldForm
         inputTitle="First Name"
         inputValue={firstName}
-        onInputChange={setFirstName}
+        onInputChange={(value) => onInputChange('firstName', value)}
       />
 
       <TextFieldForm
         inputTitle="Email *"
         inputValue={email}
-        onInputChange={handleEmailChange}
+        onInputChange={(value) => handleInputChangeAndValidation('email', value)}
         invalidText="Please enter a valid email."
         isInputValid={isEmailValid}
         setInputValid={setIsEmailValid}
@@ -140,7 +125,7 @@ export const SignUpScreen = ({navigation}) => {
       <TextFieldForm
         inputTitle="Password *"
         inputValue={password}
-        onInputChange={handlePasswordChange}
+        onInputChange={(value) => handleInputChangeAndValidation('password', value)}
         invalidText="Invalid password."
         isInputValid={isPasswordValid}
         setInputValid={setIsPasswordValid}
@@ -213,7 +198,6 @@ export const SignUpScreen = ({navigation}) => {
             style={{
               fontSize: 16,
               marginTop: 8,
-              color: '#888888',
               color: 'blue',
               textDecorationLine: 'underline',
             }}>
