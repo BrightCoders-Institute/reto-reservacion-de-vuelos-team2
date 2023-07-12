@@ -64,7 +64,7 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 5,
     width: '100%',
-    height: '28%',
+    height: 50,
   },
   btnEnabled: {
     backgroundColor: '#899FFF',
@@ -173,5 +173,102 @@ export const styles = StyleSheet.create({
     width: '33%',
     height: '23%',
     marginBottom: 100,
+  },
+
+  // -------------------- ESTILOS FLIGHT SCREENS --------------------
+  fromFlightContainer: {
+    flex: 1,
+    justifyContent: 'space-between',
+    marginRight: 35,
+    marginLeft: 35,
+    marginTop: 20,
+    paddingBottom: 42,
+  },
+  titleFlight: {
+    fontSize: 33,
+    lineHeight: 40,
+    fontWeight: '900',
+    color: 'black',
+  },
+  textFieldFlight: {
+    marginBottom: 295,
+    borderBottomWidth: 1,
+    borderBottomColor: '#909090',
+  },
+  topContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingBottom: 10,
+  },
+  underlineContainer: {
+    borderBottomColor: '#86898C',
+    borderBottomWidth: 1,
+  },
+  bottomContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingVertical: 8,
+  },
+  ToFromContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 2,
+    width: 120,
+  },
+  airportText: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#000',
+  },
+  textRight: {
+    textAlign: 'right',
+  },
+  countryText: {
+    fontSize: 16,
+    fontWeight: '300',
+    color: '#86898C',
+  },
+  infoText: {
+    color: '#000',
+    fontSize: 14,
+    fontWeight: '500',
+  },
+  cardContainer: {
+    borderBottomColor: '#000000',
+    borderBottomWidth: 1,
+  },
+  flightButton: {
+    borderWidth: 1,
+    position: 'absolute',
+    width: 50,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    bottom: 30,
+    right: 170,
+    backgroundColor: '#899FFF',
+    borderColor: '#899FFF',
+    borderRadius: 100,
+    elevation: 8,
+  },
+  // -------------------- ESTILOS FLIGHT SCREENS --------------------
+  homePageContainer: {
+    padding: 15,
+    backgroundColor: '#fff',
+  },
+  homePageTitle: {
+    color: '#899FFF',
+    fontWeight: 'bold',
+    fontSize: 32,
+    marginBottom: 15,
+  },
+  cardsContainer: {
+    marginHorizontal: 20,
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 16,
   },
 });

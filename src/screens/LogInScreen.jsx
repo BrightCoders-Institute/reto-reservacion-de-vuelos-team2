@@ -16,7 +16,7 @@ import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {useForm} from '../hooks/useForm';
 import {useShowHidePassword} from '../hooks/useShowHidePassword';
 import {useEmailPassValidation} from '../hooks/useEmailPassValidation';
-import { Loader } from '../components/Loader';
+import {Loader} from '../components/Loader';
 
 GoogleSignin.configure({
   webClientId: '230335521144-bkm22iosp953h1nqjsfn2a8fahifsilf.apps.googleusercontent.com',
@@ -45,7 +45,7 @@ export const LogInScreen = ({navigation}) => {
   };
 
   const handleDesabledSignupButton = () => {
-    if( isEmailValid && email.trim() !== '' && isPasswordValid && password.trim() !== ''){
+    if(isEmailValid && email.trim() !== '' && isPasswordValid && password.trim() !== ''){
       setIsDesabledSignupBtn(false);
       return;
     }
@@ -129,7 +129,7 @@ export const LogInScreen = ({navigation}) => {
     <View style={styles.container}>
       <Loader
         openModal={isLoadingDisplayed}
-        loadingText='Logging in...'
+        loadingText="Logging in..."
         isLoading={isLoading}
         loadingFinishText={isSuccess ? 'Logged In' : 'Error'}
         isSuccess={isSuccess}
