@@ -4,7 +4,10 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 export const FloatButtonComponent = ({navigation}) => {
   return (
-    <TouchableOpacity style={styles.button} activeOpacity={0.7}>
+    <TouchableOpacity
+      style={styles.button}
+      activeOpacity={0.7}
+      onPress={() => navigation.navigate('FlightStackNavigator')}>
       <Icon name="add" size={30} color="#fff" />
     </TouchableOpacity>
   );

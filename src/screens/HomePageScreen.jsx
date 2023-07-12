@@ -55,7 +55,7 @@ export const HomePageScreen = ({navigation}) => {
         <CardComponent />
         <CardComponent />
       </View>
-      <FloatButtonComponent />
+      <FloatButtonComponent navigation={navigation} />
       <Button title='SignOff' onPress={ handleLogOut } />
     </View>
   );
