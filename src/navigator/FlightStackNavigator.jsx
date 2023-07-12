@@ -1,9 +1,9 @@
-import { createStackNavigator } from '@react-navigation/stack';
-import { FromFlightScreen1 } from '../screens/BookAFlight/01FromFlightScreen';
-import { ToFlightScreen2 } from '../screens/BookAFlight/02ToFlightScreen';
-import { DateFlightScreen3 } from '../screens/BookAFlight/03DateFlightScreen';
-import { PassengersFlightScreen4 } from '../screens/BookAFlight/04PassengersFlightScreen';
-import { ResultsFlightScreen5 } from '../screens/BookAFlight/05ResultsFlightScreen';
+import {createStackNavigator} from '@react-navigation/stack';
+import {FromFlightScreen1} from '../screens/BookAFlight/01FromFlightScreen';
+import {ToFlightScreen2} from '../screens/BookAFlight/02ToFlightScreen';
+import {DateFlightScreen3} from '../screens/BookAFlight/03DateFlightScreen';
+import {PassengersFlightScreen4} from '../screens/BookAFlight/04PassengersFlightScreen';
+import {ResultsFlightScreen5} from '../screens/BookAFlight/05ResultsFlightScreen';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const Stack = createStackNavigator();
@@ -15,10 +15,10 @@ export const FlightStackNavigator = () => {
                 headerLeft: () => (
                   <Icon
                     name="arrow-back-ios"
-                    size={30}
+                    size={28}
                     color="#607AEE"
                     onPress={() => navigation.goBack()}
-                    style={{ marginLeft: 10 }}
+                    style={{ marginLeft: 35, marginTop: 20}}
                   />
                 ),
                 title: '',

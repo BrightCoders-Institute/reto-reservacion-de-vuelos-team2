@@ -1,7 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-shadow */
 import React, {useState, useEffect} from 'react';
-import {View, Text, StyleSheet, Button} from 'react-native';
+import {View, Text, Button} from 'react-native';
+import {styles} from '../styles/AppStyles';
 import auth from '@react-native-firebase/auth';
 import {CardComponent} from '../components/Flights/CardComponent';
 import {FloatButtonComponent} from '../components/Flights/FloatButtonComponent';
@@ -48,34 +49,15 @@ export const HomePageScreen = ({navigation}) => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>My flights</Text>
+    <View style={styles.homePageContainer}>
+      <Text style={styles.homePageTitle}>My flights</Text>
       {/* Change for a flatlist */}
       <View style={styles.cardsContainer}>
         <CardComponent />
         <CardComponent />
       </View>
       <FloatButtonComponent navigation={navigation} />
-      <Button title='SignOff' onPress={ handleLogOut } />
+      <Button title="SignOff" onPress={handleLogOut} />
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    padding: 15,
-    backgroundColor: '#fff',
-  },
-  title: {
-    color: '#899FFF',
-    fontWeight: 'bold',
-    fontSize: 32,
-    marginBottom: 15,
-  },
-  cardsContainer: {
-    marginHorizontal: 20,
-    display: 'flex',
-    flexDirection: 'column',
-    gap: 16,
-  },
-});

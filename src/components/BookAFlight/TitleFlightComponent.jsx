@@ -1,11 +1,18 @@
 import React from 'react';
 import {styles} from '../../styles/AppStyles';
-import { View, Text } from 'react-native';
+import {View, Text} from 'react-native';
 
-export const TitleFlightComponent = ({ title, paddingTop = 0, }) => {
+export const TitleFlightComponent = ({
+  title,
+  paddingTop = 0,
+  marginBottom = 0,
+  marginTop = 0,
+}) => {
   return (
-    <View>
-      <Text style={[styles.titleFlight, { paddingTop: paddingTop }]}>{ title }</Text>
+    <View style={{marginBottom: marginBottom, marginTop: marginTop}}>
+      <Text style={[styles.titleFlight, {paddingBottom: paddingTop}]}>
+        {title}
+      </Text>
     </View>
   );
 };

@@ -1,16 +1,37 @@
 import React, {useState} from 'react';
 import {styles} from '../../styles/AppStyles';
 import {View, Text} from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 import {TitleFlightComponent} from '../../components/BookAFlight/TitleFlightComponent';
 import {ButtonFlightComponent} from '../../components/BookAFlight/ButtonFlightComponent';
 import {PassengersFlightPicker} from '../../components/BookAFlight/PassengersFlightPicker';
+import {FromContent} from '../../components/Flights/FromContent';
+import {ToContent} from '../../components/Flights/ToContent';
 
 export const PassengersFlightScreen4 = ({navigation}) => {
   const [isDesabledSignupBtn, setIsDesabledSignupBtn] = useState(true);
 
   return (
     <View style={styles.fromFlightContainer}>
-      <TitleFlightComponent title="How many passengers?" paddingTop={115} />
+      <View style={{height: 80}}>
+        <View style={[styles.topContainer, styles.underlineContainer]}>
+          <View style={styles.ToFromContainer}>
+            <FromContent />
+          </View>
+
+          <Icon name="airplane" size={25} color="#899FFF" />
+
+          <View style={styles.ToFromContainer}>
+            <ToContent />
+          </View>
+        </View>
+
+        <View style={styles.bottomContainer}>
+          <Text style={styles.infoText}>September 3, 2020</Text>
+        </View>
+      </View>
+
+      <TitleFlightComponent title="How many passengers?" marginTop={48} />
 
       <View
         // eslint-disable-next-line react-native/no-inline-styles
@@ -18,7 +39,7 @@ export const PassengersFlightScreen4 = ({navigation}) => {
           display: 'flex',
           flexDirection: 'row',
           justifyContent: 'center',
-          marginBottom: 185,
+          marginBottom: 100,
         }}>
         <PassengersFlightPicker />
       </View>

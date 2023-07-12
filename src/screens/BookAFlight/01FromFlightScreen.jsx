@@ -14,7 +14,12 @@ export const FromFlightScreen1 = ({navigation}) => {
 
   return (
     <View style={styles.fromFlightContainer}>
-      <TitleFlightComponent title="Where are you now?" paddingTop={115} />
+      <View style={{height: 80}} />
+      <TitleFlightComponent
+        title="Where are you now?"
+        paddingTop={115}
+        marginTop={40}
+      />
 
       <TextFieldFlight
         inputPlaceholder="Select location"
