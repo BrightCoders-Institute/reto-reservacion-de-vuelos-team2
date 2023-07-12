@@ -64,7 +64,7 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 5,
     width: '100%',
-    height: '28%',
+    height: 50,
   },
   btnEnabled: {
     backgroundColor: '#899FFF',
@@ -173,5 +173,26 @@ export const styles = StyleSheet.create({
     width: '33%',
     height: '23%',
     marginBottom: 100,
+  },
+
+  // FLIGHT SCREEN 1
+  fromFlightContainer: {
+    flex: 1,
+    justifyContent: 'space-between',
+    marginRight: 35,
+    marginLeft: 35,
+    marginTop: 20,
+    paddingBottom: 42,
+  },
+  titleFlight: {
+    fontSize: 33,
+    lineHeight: 45,
+    fontWeight: '900',
+    color: 'black',
+  },
+  textFieldFlight: {
+    marginBottom: 220,
+    borderBottomWidth: 1,
+    borderBottomColor: '#909090',
   },
 });

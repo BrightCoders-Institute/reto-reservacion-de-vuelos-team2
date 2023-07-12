@@ -1,35 +1,31 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, {useState} from 'react';
+import {View, Text} from 'react-native';
 import {styles} from '../../styles/AppStyles';
-import { TitleFlightComponent } from '../../components/BookAFlight/TitleFlightComponent';
-import { ButtonComponent } from '../../components/ButtonComponent';
-import { useForm } from '../../hooks/useForm';
-import { TextFieldFlight } from '../../components/BookAFlight/TextFieldFlight';
+import {TitleFlightComponent} from '../../components/BookAFlight/TitleFlightComponent';
+import {useForm} from '../../hooks/useForm';
+import {TextFieldFlight} from '../../components/BookAFlight/TextFieldFlight';
+import {ButtonFlightComponent} from '../../components/BookAFlight/ButtonFlightComponent';
 
-export const FromFlightScreen1 = ({ navigation }) => {
-
+export const FromFlightScreen1 = ({navigation}) => {
   const [isDesabledSignupBtn, setIsDesabledSignupBtn] = useState(true);
-  const { fromField, onResetForm, onInputChange } = useForm({
+  const {fromField, onResetForm, onInputChange} = useForm({
     fromField,
   });
 
   return (
-    <View>
-      <TitleFlightComponent
-        title="Where are you now?"
-      />
+    <View style={styles.fromFlightContainer}>
+      <TitleFlightComponent title="Where are you now?" paddingTop={115} />
 
       <TextFieldFlight
         inputPlaceholder="Select location"
         inputValue={fromField}
       />
 
-      <ButtonComponent
+      <ButtonFlightComponent
         onPressFn={() => navigation.navigate('ToScreen')}
-        isDisabled={false}
-      >
+        isDisabled={false}>
         <Text style={styles.buttonText}>Next</Text>
-      </ButtonComponent>
+      </ButtonFlightComponent>
     </View>
   );
 };

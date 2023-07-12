@@ -151,7 +151,7 @@ export const SignUpScreen = ({navigation}) => {
     <View style={styles.container}>
       <Loader
         openModal={isLoadingDisplayed}
-        loadingText='Signing up...'
+        loadingText="Signing up..."
         isLoading={isLoading}
         loadingFinishText={isSuccess ? 'Signed Up' : 'Error!'}
         isSuccess={isSuccess}
