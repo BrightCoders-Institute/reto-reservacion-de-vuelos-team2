@@ -153,4 +153,25 @@ export const styles = StyleSheet.create({
     marginBottom: 10,
     marginLeft: 5
   },
+
+  // -------------------- ESTILOS LOADER --------------------
+  loderContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  overlay: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  loadingContent: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#2F3446',
+    width: '33%',
+    height: '23%',
+    marginBottom: 100,
+  },
 });
