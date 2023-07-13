@@ -192,7 +192,7 @@ export const styles = StyleSheet.create({
   },
   textFieldFlight: {
     // marginBottom: 295,
-    // marginTop: 120,
+    marginTop: 90,
     borderBottomWidth: 1,
     borderBottomColor: '#909090',
   },
@@ -271,5 +271,20 @@ export const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     gap: 16,
+  },
+  airportFlatListElement: {
+    height: 50,
+    borderBottomWidth: 1,
+    borderRightWidth: 1,
+    borderLeftWidth: 1,
+    borderColor: '#E1E1E1',
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderRadius: 5,
+  },
+  textInputContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
   },
 });
