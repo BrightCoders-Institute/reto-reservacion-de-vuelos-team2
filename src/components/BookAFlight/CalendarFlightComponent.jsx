@@ -53,10 +53,9 @@ export const CalendarFlightComponent = () => {
           textMonthFontSize: 25,
 
           textDayFontSize: 17,
-          textDayFontWeight: '400', // negritas de los días
-          textSectionTitleColor: 'black', // color de los días de la semana
-          textDayHeaderFontWeight: '800', // negritas de los días de la semana
-          // textDayHeaderFontSize: 16, // tamaño de días de la semana
+          textDayFontWeight: '400', // days
+          textSectionTitleColor: 'black', // color of the weekdays
+          textDayHeaderFontWeight: '800',
           weekVerticalMargin: 12,
         }}
       />

@@ -7,7 +7,6 @@ export const ArrowLeft = () => {
         name="arrow-back-ios"
         size={25}
         color="#607AEE"
-        // style={{ marginLeft: 35, marginTop: 10}}
     />
   );
 };

@@ -64,8 +64,6 @@ export const FromFlightScreen1 = ({navigation}) => {
       <View style={{height: height*.12, backgroundColor: 'blue', justifyContent: 'center'}}>
         <TitleFlightComponent
           title="Where are you now?"
-          // paddingTop={115}
-          // marginTop={40}
         />
       </View>
 
@@ -82,7 +80,6 @@ export const FromFlightScreen1 = ({navigation}) => {
               onPress={() => handleItemPress(item)}
               key={item.id}>{`${item.city}, ${item.country}`}</Text>
           )}
-          // style={{backgroundColor: 'red'}}
           keyExtractor={(item) => item.id}
         />
       </View>
