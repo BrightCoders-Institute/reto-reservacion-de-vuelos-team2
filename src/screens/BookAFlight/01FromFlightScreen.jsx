@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, FlatList, Dimensions} from 'react-native';
+import {View, Text, FlatList, Dimensions, TouchableOpacity} from 'react-native';
 import {styles} from '../../styles/AppStyles';
 import {TitleFlightComponent} from '../../components/BookAFlight/TitleFlightComponent';
 import {TextFieldFlight} from '../../components/BookAFlight/TextFieldFlight';
@@ -69,7 +69,7 @@ export const FromFlightScreen1 = ({navigation}) => {
         />
       </View>
 
-      <View style={{display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', height: height*.55, backgroundColor: 'green'}}>
+      {/* <View style={{display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', height: height*.55, backgroundColor: 'green'}}>
         <TextFieldFlight
           inputPlaceholder="Select location"
           inputValue={inputText}
@@ -78,12 +78,31 @@ export const FromFlightScreen1 = ({navigation}) => {
         <FlatList
           data={matchedOptions}
           renderItem={({item}) => (
-            <Text
-              onPress={() => handleItemPress(item)}
-              key={item.id}>{`${item.city}, ${item.country}`}</Text>
+            <TouchableOpacity onPress={() => handleItemPress(item)}>
+              <Text key={item.id}>{`${item.city}, ${item.country}`}</Text>
+            </TouchableOpacity>
           )}
           // style={{backgroundColor: 'red'}}
           keyExtractor={(item) => item.id}
+        />
+      </View> */}
+
+      <View style={{display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', height: height*.55, backgroundColor: 'green'}}>
+        <TextFieldFlight
+          inputPlaceholder="Select location"
+          inputValue={inputText}
+          onChangeTextFn={handleInput}
+        />
+        <FlatList
+          data={matchedOptions}
+          renderItem={({ item }) => (
+            <TouchableOpacity style={{height: 45}} onPress={() => handleItemPress(item)}>
+              <Text key={item.id}>{`${item.city}, ${item.country}`}</Text>
+            </TouchableOpacity>
+          )}
+          keyExtractor={(item) => item.id}
+          style={{ maxHeight: height * 0.25 }}
+          contentContainerStyle={{ flexGrow: 1 }}
         />
       </View>
 
