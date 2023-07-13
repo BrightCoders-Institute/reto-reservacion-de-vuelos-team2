@@ -182,7 +182,7 @@ export const styles = StyleSheet.create({
     marginRight: 35,
     marginLeft: 35,
     marginTop: 20,
-    paddingBottom: 42,
+    // paddingBottom: 42,
   },
   titleFlight: {
     fontSize: 33,
@@ -191,7 +191,8 @@ export const styles = StyleSheet.create({
     color: 'black',
   },
   textFieldFlight: {
-    marginBottom: 295,
+    // marginBottom: 295,
+    // marginTop: 120,
     borderBottomWidth: 1,
     borderBottomColor: '#909090',
   },

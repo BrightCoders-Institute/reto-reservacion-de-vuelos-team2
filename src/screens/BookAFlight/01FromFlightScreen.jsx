@@ -1,86 +1,99 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, FlatList} from 'react-native';
+import {View, Text, FlatList, Dimensions} from 'react-native';
 import {styles} from '../../styles/AppStyles';
 import {TitleFlightComponent} from '../../components/BookAFlight/TitleFlightComponent';
-import {useForm} from '../../hooks/useForm';
 import {TextFieldFlight} from '../../components/BookAFlight/TextFieldFlight';
 import {ButtonFlightComponent} from '../../components/BookAFlight/ButtonFlightComponent';
 import firestore from '@react-native-firebase/firestore';
 
+const { width, height } = Dimensions.get('window');
+
 export const FromFlightScreen1 = ({navigation}) => {
   const [isDesabledSignupBtn, setIsDesabledSignupBtn] = useState(true);
-  const {fromField, onResetForm, onInputChange} = useForm({
-    fromField,
-  });
-  const [searchResults, setSearchResults] = useState([]);
+  const [inputText, setInputText] = useState('');
+  const [airportsData, setAirportsData] = useState([]);
+  const [matchedOptions, setMatchedOptions] = useState([]);
+  const [selectedOption, setSelectedOption] = useState(null);
 
   useEffect(() => {
     getCities();
   }, []);
 
-  const handleSearch = async (text) => {
-    onInputChange(text);
-
-    // Realiza la búsqueda en Firebase
-    const snapshot = await firebase
-      .database()
-      .ref('registros')
-      .orderByChild('campoDeBusqueda')
-      .startAt(text)
-      .endAt(text + '\uf8ff')
-      .once('value');
-
-    // Obtén los resultados de búsqueda
-    const data = snapshot.val();
-    const results = data ? Object.values(data) : [];
-
-    setSearchResults(results);
-  };
-
   const getCities = async () => {
-    const arrayAirports = [];
-    const originPlaces = await firestore().collection('airports').get();
-    const airports = originPlaces.docs;
-    for (const i of airports) {
-      // console.log(i._data);
-      arrayAirports.push(i._data);
-    }
-    console.log(arrayAirports);
-    setSearchResults(arrayAirports);
+    const collectionRef = firestore().collection('airports');
+    collectionRef
+      .get()
+      .then(querySnapshot => {
+        const arrayAirports = [];
+        querySnapshot.forEach(doc => {
+          const airport = {...doc._data, id: doc.id};
+          arrayAirports.push(airport);
+        });
+        console.log(arrayAirports);
+        setAirportsData(arrayAirports);
+      })
+      .catch(error => {
+        console.log('Error al obtener los documentos:', error);
+      });
   };
 
-  const handleInput = async (text) => {
-    console.log(text);
+  const handleInput = (text) => {
+    setInputText(text);
+    setSelectedOption(null);
+    if (text.trim() !== '') {
+      const filteredOptions = airportsData.filter(item =>
+        item.city.toLowerCase().includes(text.toLowerCase()) ||
+        item.country.toLowerCase().includes(text.toLowerCase())
+      );
+      setMatchedOptions(filteredOptions);
+    } else {
+      setMatchedOptions([]);
+    }
+  };
+
+  const handleItemPress = (item) => {
+    setInputText(`${item.city}, ${item.country}`);
+    setSelectedOption(item);
+    setMatchedOptions([]);
+    console.log(`${item.city}, ${item.country}`);
   };
 
   return (
     <View style={styles.fromFlightContainer}>
-      <View style={{height: 80}} />
-      <TitleFlightComponent
-        title="Where are you now?"
-        paddingTop={115}
-        marginTop={40}
-      />
-
-      <View style={{display: 'flex', flexDirection: 'column'}}>
-        <TextFieldFlight
-          inputPlaceholder="Select location"
-          inputValue={fromField}
-          onChangeTextFn={handleInput}
+      <View style={{height: height*.13, backgroundColor: 'red'}} />
+      <View style={{height: height*.12, backgroundColor: 'blue', justifyContent: 'center'}}>
+        <TitleFlightComponent
+          title="Where are you now?"
+          // paddingTop={115}
+          // marginTop={40}
         />
-        {/* <FlatList
-          data={searchResults}
-          renderItem={({item}) => <Text>{item.country}</Text>}
-          style={{backgroundColor: 'red'}}
-          keyExtractor={(item) => item.id}
-        /> */}
       </View>
 
-      <ButtonFlightComponent
-        onPressFn={() => navigation.navigate('ToScreen')}
-        isDisabled={false}>
-        <Text style={styles.buttonText}>Next</Text>
-      </ButtonFlightComponent>
+      <View style={{display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', height: height*.55, backgroundColor: 'green'}}>
+        <TextFieldFlight
+          inputPlaceholder="Select location"
+          inputValue={inputText}
+          onChangeTextFn={handleInput}
+        />
+        <FlatList
+          data={matchedOptions}
+          renderItem={({item}) => (
+            <Text
+              onPress={() => handleItemPress(item)}
+              key={item.id}>{`${item.city}, ${item.country}`}</Text>
+          )}
+          // style={{backgroundColor: 'red'}}
+          keyExtractor={(item) => item.id}
+        />
+      </View>
+
+      <View style={{height: height*.18, backgroundColor: 'orange'}}>
+        <ButtonFlightComponent
+          onPressFn={() => navigation.navigate('ToScreen')}
+          isDisabled={false}>
+          <Text style={styles.buttonText}>Next</Text>
+        </ButtonFlightComponent>
+      </View>
     </View>
   );
 };
