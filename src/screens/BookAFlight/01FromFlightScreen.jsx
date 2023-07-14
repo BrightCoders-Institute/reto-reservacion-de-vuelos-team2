@@ -1,5 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, Dimensions, TouchableOpacity, Keyboard, FlatList} from 'react-native';
+import {
+  View,
+  Text,
+  Dimensions,
+  TouchableOpacity,
+  Keyboard,
+  FlatList,
+} from 'react-native';
 import {styles} from '../../styles/AppStyles';
 import {TitleFlightComponent} from '../../components/BookAFlight/TitleFlightComponent';
 import {TextFieldFlight} from '../../components/BookAFlight/TextFieldFlight';
@@ -38,7 +45,7 @@ export const FromFlightScreen1 = ({navigation}) => {
       });
   };
 
-  const handleInput = (text) => {
+  const handleInput = text => {
     setInputText(text);
     setSelectedOption(null);
     if (text.trim() !== '') {
@@ -54,7 +61,7 @@ export const FromFlightScreen1 = ({navigation}) => {
     }
   };
 
-  const handleItemPress = (item) => {
+  const handleItemPress = item => {
     setInputText(`${item.city}, ${item.country}`);
     setSelectedOption(item);
     setMatchedOptions([]);
@@ -86,7 +93,7 @@ export const FromFlightScreen1 = ({navigation}) => {
                 key={item.id}>{`${item.city}, ${item.country}`}</Text>
             </TouchableOpacity>
           )}
-          keyExtractor={(item) => item.id}
+          keyExtractor={item => item.id}
           style={{maxHeight: height * 0.25}}
           contentContainerStyle={{flexGrow: 1}}
         />

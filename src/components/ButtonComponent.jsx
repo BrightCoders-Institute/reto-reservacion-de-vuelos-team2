@@ -7,8 +7,7 @@ export const ButtonComponent = ({onPressFn, isDisabled, children}) => {
     <TouchableOpacity
       disabled={isDisabled}
       onPress={onPressFn}
-      style={[styles.buttonSignUp, isDisabled ? null : styles.btnEnabled]}
-    >
+      style={[styles.buttonSignUp, isDisabled ? null : styles.btnEnabled]}>
       {children}
     </TouchableOpacity>
   );

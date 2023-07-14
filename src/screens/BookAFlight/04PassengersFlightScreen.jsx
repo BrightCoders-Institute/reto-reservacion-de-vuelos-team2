@@ -34,7 +34,6 @@ export const PassengersFlightScreen4 = ({navigation}) => {
       <TitleFlightComponent title="How many passengers?" marginTop={48} />
 
       <View
-        // eslint-disable-next-line react-native/no-inline-styles
         style={{
           display: 'flex',
           flexDirection: 'row',
