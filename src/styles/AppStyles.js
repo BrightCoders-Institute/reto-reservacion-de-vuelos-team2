@@ -154,7 +154,7 @@ export const styles = StyleSheet.create({
     marginLeft: 5
   },
 
-  // -------------------- ESTILOS LOADER --------------------
+  // -------------------- STYLES LOADER --------------------
   loderContainer: {
     flex: 1,
     justifyContent: 'center',
@@ -175,14 +175,13 @@ export const styles = StyleSheet.create({
     marginBottom: 100,
   },
 
-  // -------------------- ESTILOS FLIGHT SCREENS --------------------
+  // -------------------- STYLES FLIGHT SCREENS --------------------
   fromFlightContainer: {
     flex: 1,
     justifyContent: 'space-between',
     marginRight: 35,
     marginLeft: 35,
     marginTop: 20,
-    // paddingBottom: 42,
   },
   titleFlight: {
     fontSize: 33,
@@ -255,7 +254,7 @@ export const styles = StyleSheet.create({
     borderRadius: 100,
     elevation: 8,
   },
-  // -------------------- ESTILOS FLIGHT SCREENS --------------------
+  // -------------------- STYLES FLIGHT SCREENS --------------------
   homePageContainer: {
     padding: 15,
     backgroundColor: '#fff',
