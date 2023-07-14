@@ -1,11 +1,17 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, Dimensions, TouchableOpacity, Keyboard, FlatList} from 'react-native';
+import {
+  View,
+  Text,
+  Dimensions,
+  TouchableOpacity,
+  Keyboard,
+  FlatList,
+} from 'react-native';
 import {styles} from '../../styles/AppStyles';
 import {TitleFlightComponent} from '../../components/BookAFlight/TitleFlightComponent';
 import {TextFieldFlight} from '../../components/BookAFlight/TextFieldFlight';
 import {ButtonFlightComponent} from '../../components/BookAFlight/ButtonFlightComponent';
 import firestore from '@react-native-firebase/firestore';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 const {width, height} = Dimensions.get('window');
 
@@ -30,7 +36,6 @@ export const FromFlightScreen1 = ({navigation}) => {
           const airport = {...doc._data, id: doc.id};
           arrayAirports.push(airport);
         });
-        // console.log(arrayAirports);
         setAirportsData(arrayAirports);
       })
       .catch(error => {
@@ -38,7 +43,7 @@ export const FromFlightScreen1 = ({navigation}) => {
       });
   };
 
-  const handleInput = (text) => {
+  const handleInput = text => {
     setFromInputText(text);
     setSelectedOption(null);
     if (text.trim() !== '') {
@@ -54,7 +59,7 @@ export const FromFlightScreen1 = ({navigation}) => {
     }
   };
 
-  const handleItemPress = (item) => {
+  const handleItemPress = item => {
     setFromInputText(`${item.city}, ${item.country}`);
     setSelectedOption(item);
     setMatchedOptions([]);
@@ -95,7 +100,7 @@ export const FromFlightScreen1 = ({navigation}) => {
                 key={item.id}>{`${item.city}, ${item.country}`}</Text>
             </TouchableOpacity>
           )}
-          keyExtractor={(item) => item.id}
+          keyExtractor={item => item.id}
           style={{maxHeight: height * 0.25}}
           contentContainerStyle={{flexGrow: 1}}
         />
@@ -103,7 +108,6 @@ export const FromFlightScreen1 = ({navigation}) => {
 
       <View style={{height: height * 0.18}}>
         <ButtonFlightComponent
-          // onPressFn={() => navigation.navigate('ToScreen')}
           onPressFn={goToNextPage}
           isDisabled={isDesabledNextBtn}>
           <Text style={styles.buttonText}>Next</Text>

@@ -73,7 +73,6 @@ export const ToFlightScreen2 = ({navigation, route}) => {
 
   return (
     <View style={styles.fromFlightContainer}>
-
       <View style={{height: height * 0.13}}>
         <View style={styles.topContainer}>
           <View style={[styles.ToFromContainer, styles.underlineContainer]}>
@@ -85,7 +84,7 @@ export const ToFlightScreen2 = ({navigation, route}) => {
 
           <Icon name="airplane" size={25} color="#899FFF" />
 
-          <View style={styles.ToFromContainer}></View>
+          <View style={styles.ToFromContainer} />
         </View>
       </View>
 

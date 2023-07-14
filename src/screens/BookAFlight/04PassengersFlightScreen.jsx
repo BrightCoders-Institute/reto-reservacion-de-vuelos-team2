@@ -77,9 +77,7 @@ export const PassengersFlightScreen4 = ({navigation, route}) => {
       </View>
 
       <View style={{height: height * 0.18}}>
-        <ButtonFlightComponent
-          onPressFn={goToNextPage}
-          isDisabled={false}>
+        <ButtonFlightComponent onPressFn={goToNextPage} isDisabled={false}>
           <Text style={styles.buttonText}>Next</Text>
         </ButtonFlightComponent>
       </View>

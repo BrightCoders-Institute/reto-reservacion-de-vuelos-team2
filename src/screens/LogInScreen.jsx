@@ -19,7 +19,8 @@ import {useEmailPassValidation} from '../hooks/useEmailPassValidation';
 import {Loader} from '../components/Loader';
 
 GoogleSignin.configure({
-  webClientId: '230335521144-bkm22iosp953h1nqjsfn2a8fahifsilf.apps.googleusercontent.com',
+  webClientId:
+    '230335521144-bkm22iosp953h1nqjsfn2a8fahifsilf.apps.googleusercontent.com',
 });
 
 export const LogInScreen = ({navigation}) => {
@@ -28,7 +29,17 @@ export const LogInScreen = ({navigation}) => {
     password: '',
   });
   const {showPassword, handleShowPassword} = useShowHidePassword();
-  const { isEmailValid, isPasswordValid, errorEmailText, errorPwText, setIsEmailValid, setIsPasswordValid, handleFieldValidation, setErrorEmailText, setErrorPwText } = useEmailPassValidation();
+  const {
+    isEmailValid,
+    isPasswordValid,
+    errorEmailText,
+    errorPwText,
+    setIsEmailValid,
+    setIsPasswordValid,
+    handleFieldValidation,
+    setErrorEmailText,
+    setErrorPwText,
+  } = useEmailPassValidation();
   const [isDesabledSignupBtn, setIsDesabledSignupBtn] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingDisplayed, setIsLoadingDisplayed] = useState(false);
@@ -45,7 +56,12 @@ export const LogInScreen = ({navigation}) => {
   };
 
   const handleDesabledSignupButton = () => {
-    if(isEmailValid && email.trim() !== '' && isPasswordValid && password.trim() !== ''){
+    if (
+      isEmailValid &&
+      email.trim() !== '' &&
+      isPasswordValid &&
+      password.trim() !== ''
+    ) {
       setIsDesabledSignupBtn(false);
       return;
     }
@@ -145,7 +161,9 @@ export const LogInScreen = ({navigation}) => {
         <TextFieldForm
           inputTitle="Email *"
           inputValue={email}
-          onInputChange={(value) => handleInputChangeAndValidation('email', value)}
+          onInputChange={value =>
+            handleInputChangeAndValidation('email', value)
+          }
           invalidText={errorEmailText}
           isInputValid={isEmailValid}
           setInputValid={setIsEmailValid}
@@ -154,7 +172,9 @@ export const LogInScreen = ({navigation}) => {
         <TextFieldForm
           inputTitle="Password *"
           inputValue={password}
-          onInputChange={(value) => handleInputChangeAndValidation('password', value)}
+          onInputChange={value =>
+            handleInputChangeAndValidation('password', value)
+          }
           invalidText={errorPwText}
           isInputValid={isPasswordValid}
           setInputValid={setIsPasswordValid}
@@ -180,9 +200,7 @@ export const LogInScreen = ({navigation}) => {
 
         <Text style={{fontSize: 15, color: '#888888'}}>or</Text>
 
-        <ButtonComponent
-          onPressFn={logInWithGoogle}
-          isDisabled={false}>
+        <ButtonComponent onPressFn={logInWithGoogle} isDisabled={false}>
           <View style={styles.googleTextContainer}>
             <Image
               style={styles.googleLogo}

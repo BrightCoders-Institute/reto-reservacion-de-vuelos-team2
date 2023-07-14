@@ -13,7 +13,8 @@ import {useShowHidePassword} from '../hooks/useShowHidePassword';
 import {Loader} from '../components/Loader';
 
 GoogleSignin.configure({
-  webClientId: '230335521144-bkm22iosp953h1nqjsfn2a8fahifsilf.apps.googleusercontent.com',
+  webClientId:
+    '230335521144-bkm22iosp953h1nqjsfn2a8fahifsilf.apps.googleusercontent.com',
 });
 
 export const SignUpScreen = ({navigation}) => {
@@ -22,12 +23,23 @@ export const SignUpScreen = ({navigation}) => {
     email: '',
     password: '',
   });
-  const { isEmailValid, isPasswordValid, errorEmailText, errorPwText, setIsEmailValid, setIsPasswordValid, handleFieldValidation, setErrorEmailText, setErrorPwText } = useEmailPassValidation();
+  const {
+    isEmailValid,
+    isPasswordValid,
+    errorEmailText,
+    errorPwText,
+    setIsEmailValid,
+    setIsPasswordValid,
+    handleFieldValidation,
+    setErrorEmailText,
+    setErrorPwText,
+  } = useEmailPassValidation();
   const {showPassword, handleShowPassword} = useShowHidePassword();
   const [termsCheckbox, setTermsCheckbox] = useState(false);
   const [subscribeCheckbox, setSubscribeCheckbox] = useState(false);
   const [isDesabledSignupBtn, setIsDesabledSignupBtn] = useState(true);
-  const [isDesabledGoogleSignupBtn, setIsDesabledGoogleSignupBtn] = useState(true);
+  const [isDesabledGoogleSignupBtn, setIsDesabledGoogleSignupBtn] =
+    useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingDisplayed, setIsLoadingDisplayed] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -51,7 +63,13 @@ export const SignUpScreen = ({navigation}) => {
   };
 
   const handleDesabledSignupButton = () => {
-    if (isEmailValid && email.trim() !== '' && isPasswordValid && password.trim() !== '' && termsCheckbox){
+    if (
+      isEmailValid &&
+      email.trim() !== '' &&
+      isPasswordValid &&
+      password.trim() !== '' &&
+      termsCheckbox
+    ) {
       setIsDesabledSignupBtn(false);
       return;
     }
@@ -145,7 +163,7 @@ export const SignUpScreen = ({navigation}) => {
           console.error(error);
         }, 1500);
       });
-  };
+  }
 
   return (
     <View style={styles.container}>
@@ -162,13 +180,13 @@ export const SignUpScreen = ({navigation}) => {
       <TextFieldForm
         inputTitle="First Name"
         inputValue={firstName}
-        onInputChange={(value) => onInputChange('firstName', value)}
+        onInputChange={value => onInputChange('firstName', value)}
       />
 
       <TextFieldForm
         inputTitle="Email *"
         inputValue={email}
-        onInputChange={(value) => handleInputChangeAndValidation('email', value)}
+        onInputChange={value => handleInputChangeAndValidation('email', value)}
         invalidText={errorEmailText}
         isInputValid={isEmailValid}
         setInputValid={setIsEmailValid}
@@ -177,7 +195,9 @@ export const SignUpScreen = ({navigation}) => {
       <TextFieldForm
         inputTitle="Password *"
         inputValue={password}
-        onInputChange={(value) => handleInputChangeAndValidation('password', value)}
+        onInputChange={value =>
+          handleInputChangeAndValidation('password', value)
+        }
         invalidText={errorPwText}
         isInputValid={isPasswordValid}
         setInputValid={setIsPasswordValid}

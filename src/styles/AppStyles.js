@@ -151,7 +151,7 @@ export const styles = StyleSheet.create({
     color: 'red',
     fontSize: 12,
     marginBottom: 10,
-    marginLeft: 5
+    marginLeft: 5,
   },
 
   // -------------------- STYLES LOADER --------------------
