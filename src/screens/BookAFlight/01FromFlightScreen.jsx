@@ -10,8 +10,8 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 const {width, height} = Dimensions.get('window');
 
 export const FromFlightScreen1 = ({navigation}) => {
-  const [isDesabledSignupBtn, setIsDesabledSignupBtn] = useState(true);
-  const [inputText, setInputText] = useState('');
+  const [isDesabledNextBtn, setIsDesabledNextBtn] = useState(true);
+  const [fromInputText, setFromInputText] = useState('');
   const [airportsData, setAirportsData] = useState([]);
   const [matchedOptions, setMatchedOptions] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
@@ -39,7 +39,7 @@ export const FromFlightScreen1 = ({navigation}) => {
   };
 
   const handleInput = (text) => {
-    setInputText(text);
+    setFromInputText(text);
     setSelectedOption(null);
     if (text.trim() !== '') {
       const filteredOptions = airportsData.filter(
@@ -50,16 +50,25 @@ export const FromFlightScreen1 = ({navigation}) => {
       setMatchedOptions(filteredOptions);
     } else {
       setMatchedOptions([]);
-      setIsDesabledSignupBtn(true);
+      setIsDesabledNextBtn(true);
     }
   };
 
   const handleItemPress = (item) => {
-    setInputText(`${item.city}, ${item.country}`);
+    setFromInputText(`${item.city}, ${item.country}`);
     setSelectedOption(item);
     setMatchedOptions([]);
-    setIsDesabledSignupBtn(false);
+    setIsDesabledNextBtn(false);
     Keyboard.dismiss();
+  };
+
+  const goToNextPage = () => {
+    const fromData = {
+      fromInputText,
+      optionSelectedFrom: selectedOption,
+      airportsData,
+    };
+    navigation.navigate('ToScreen', {fromData});
   };
 
   return (
@@ -72,7 +81,7 @@ export const FromFlightScreen1 = ({navigation}) => {
       <View style={(styles.textInputContainer, {height: height * 0.55})}>
         <TextFieldFlight
           inputPlaceholder="Select location"
-          inputValue={inputText}
+          inputValue={fromInputText}
           onChangeTextFn={handleInput}
         />
         <FlatList
@@ -94,8 +103,9 @@ export const FromFlightScreen1 = ({navigation}) => {
 
       <View style={{height: height * 0.18}}>
         <ButtonFlightComponent
-          onPressFn={() => navigation.navigate('ToScreen')}
-          isDisabled={isDesabledSignupBtn}>
+          // onPressFn={() => navigation.navigate('ToScreen')}
+          onPressFn={goToNextPage}
+          isDisabled={isDesabledNextBtn}>
           <Text style={styles.buttonText}>Next</Text>
         </ButtonFlightComponent>
       </View>

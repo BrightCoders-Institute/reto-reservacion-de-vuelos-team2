@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {styles} from '../../styles/AppStyles';
-import {View, Text, Dimensions} from 'react-native';
+import {View, Text, Dimensions, FlatList, TouchableOpacity, Keyboard} from 'react-native';
 import {useForm} from '../../hooks/useForm';
 import {TitleFlightComponent} from '../../components/BookAFlight/TitleFlightComponent';
 import {TextFieldFlight} from '../../components/BookAFlight/TextFieldFlight';
@@ -10,11 +10,66 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 const {width, height} = Dimensions.get('window');
 
-export const ToFlightScreen2 = ({navigation}) => {
-  const [isDesabledSignupBtn, setIsDesabledSignupBtn] = useState(true);
-  const {toField, onResetForm, onInputChange} = useForm({
-    toField,
-  });
+export const ToFlightScreen2 = ({navigation, route}) => {
+  const {fromData: {fromInputText, optionSelectedFrom, airportsData}} = route.params;
+  const [isDesabledNextBtn, setIsDesabledNextBtn] = useState(true);
+  const [toInputText, setToInputText] = useState('');
+  const [newAirportsData, setNewAirportsData] = useState([]);
+  const [matchedOptions, setMatchedOptions] = useState([]);
+  const [selectedOption, setSelectedOption] = useState(null);
+
+  useEffect(() => {
+    getToOptions();
+  }, []);
+
+  const getToOptions = () => {
+    const selectedOption = optionSelectedFrom;
+    const newOptions = airportsData.filter(
+      item =>
+        item.city !== selectedOption.city &&
+        item.country !== selectedOption.country,
+    );
+    setNewAirportsData(newOptions);
+    console.log('input: ' + fromInputText);
+    console.log('optionSelected: ');
+    console.log(optionSelectedFrom);
+    console.log('newOptions:');
+    console.log(newOptions);
+  };
+
+  const handleInput = (text) => {
+    setToInputText(text);
+    setSelectedOption(null);
+    if (text.trim() !== '') {
+      const filteredOptions = newAirportsData.filter(
+        item =>
+          item.city.toLowerCase().includes(text.toLowerCase()) ||
+          item.country.toLowerCase().includes(text.toLowerCase()),
+      );
+      setMatchedOptions(filteredOptions);
+    } else {
+      setMatchedOptions([]);
+      setIsDesabledNextBtn(true);
+    }
+  };
+
+  const handleItemPress = (item) => {
+    setToInputText(`${item.city}, ${item.country}`);
+    setSelectedOption(item);
+    setMatchedOptions([]);
+    setIsDesabledNextBtn(false);
+    Keyboard.dismiss();
+  };
+
+  const goToNextPage = () => {
+    const fromData = {
+      fromInputText,
+      optionSelectedFrom,
+      toInputText,
+      optionSelectedTo: selectedOption,
+    };
+    navigation.navigate('DateScreen', {fromData});
+  };
 
   return (
     <View style={styles.fromFlightContainer}>
@@ -38,14 +93,30 @@ export const ToFlightScreen2 = ({navigation}) => {
       <View style={(styles.textInputContainer, {height: height * 0.55})}>
         <TextFieldFlight
           inputPlaceholder="Select location"
-          inputValue={toField}
+          inputValue={toInputText}
+          onChangeTextFn={handleInput}
+        />
+        <FlatList
+          data={matchedOptions}
+          renderItem={({item}) => (
+            <TouchableOpacity
+              style={styles.airportFlatListElement}
+              onPress={() => handleItemPress(item)}>
+              <Text
+                style={{padding: 10}}
+                key={item.id}>{`${item.city}, ${item.country}`}</Text>
+            </TouchableOpacity>
+          )}
+          keyExtractor={(item) => item.id}
+          style={{maxHeight: height * 0.25}}
+          contentContainerStyle={{flexGrow: 1}}
         />
       </View>
 
       <View style={{height: height * 0.18}}>
         <ButtonFlightComponent
-          onPressFn={() => navigation.navigate('DateScreen')}
-          isDisabled={false}>
+          onPressFn={goToNextPage}
+          isDisabled={isDesabledNextBtn}>
           <Text style={styles.buttonText}>Next</Text>
         </ButtonFlightComponent>
       </View>
