@@ -62,13 +62,13 @@ export const ToFlightScreen2 = ({navigation, route}) => {
   };
 
   const goToNextPage = () => {
-    const fromData = {
+    const toData = {
       fromInputText,
       optionSelectedFrom,
       toInputText,
       optionSelectedTo: selectedOption,
     };
-    navigation.navigate('DateScreen', {fromData});
+    navigation.navigate('DateScreen', {toData});
   };
 
   return (
@@ -77,7 +77,10 @@ export const ToFlightScreen2 = ({navigation, route}) => {
       <View style={{height: height * 0.13}}>
         <View style={styles.topContainer}>
           <View style={[styles.ToFromContainer, styles.underlineContainer]}>
-            <FromContent />
+            <FromContent
+              abbr={optionSelectedFrom.abbr}
+              country={optionSelectedFrom.country}
+            />
           </View>
 
           <Icon name="airplane" size={25} color="#899FFF" />

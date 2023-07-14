@@ -11,12 +11,13 @@ let day = ('0' + fecha.getDate()).slice(-2);
 let fechaFormateada = year + '-' + month + '-' + day;
 const INITIAL_DATE = fechaFormateada;
 
-export const CalendarFlightComponent = () => {
+export const CalendarFlightComponent = ({onChangeDateFn}) => {
   const [selected, setSelected] = useState(INITIAL_DATE);
 
   const onDayPress = useCallback(day => {
     console.log(day);
     setSelected(day.dateString);
+    onChangeDateFn(day);
   }, []);
 
   const marked = useMemo(() => {

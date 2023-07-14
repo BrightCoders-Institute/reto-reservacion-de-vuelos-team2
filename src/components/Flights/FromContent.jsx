@@ -2,11 +2,11 @@ import React from 'react';
 import {Text} from 'react-native';
 import {styles} from '../../styles/AppStyles';
 
-export const FromContent = () => {
+export const FromContent = ({abbr = 'BEG', country = 'Serbia'}) => {
   return (
     <>
-      <Text style={styles.airportText}>BEG</Text>
-      <Text style={styles.countryText}>Serbia</Text>
+      <Text style={styles.airportText}>{abbr}</Text>
+      <Text style={styles.countryText}>{country}</Text>
     </>
   );
 };
