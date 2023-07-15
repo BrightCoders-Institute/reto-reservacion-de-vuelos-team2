@@ -15,7 +15,6 @@ export const CalendarFlightComponent = ({onChangeDateFn}) => {
   const [selected, setSelected] = useState(INITIAL_DATE);
 
   const onDayPress = useCallback(day => {
-    console.log(day);
     setSelected(day.dateString);
     onChangeDateFn(day);
   }, []);

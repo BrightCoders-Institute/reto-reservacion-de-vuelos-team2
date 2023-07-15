@@ -15,7 +15,10 @@ import firestore from '@react-native-firebase/firestore';
 
 const {width, height} = Dimensions.get('window');
 
-export const FromFlightScreen1 = ({navigation}) => {
+export const FromFlightScreen1 = ({navigation, route}) => {
+  const {
+    homePageData: {userEmail},
+  } = route.params;
   const [isDesabledNextBtn, setIsDesabledNextBtn] = useState(true);
   const [fromInputText, setFromInputText] = useState('');
   const [airportsData, setAirportsData] = useState([]);
@@ -69,6 +72,7 @@ export const FromFlightScreen1 = ({navigation}) => {
 
   const goToNextPage = () => {
     const fromData = {
+      userEmail,
       fromInputText,
       optionSelectedFrom: selectedOption,
       airportsData,

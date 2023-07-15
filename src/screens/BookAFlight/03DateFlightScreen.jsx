@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {styles} from '../../styles/AppStyles';
 import {View, Text, Dimensions} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -11,21 +11,20 @@ import {ToContent} from '../../components/Flights/ToContent';
 const {width, height} = Dimensions.get('window');
 
 export const DateFlightScreen3 = ({navigation, route}) => {
-  const {toData: {fromInputText, optionSelectedFrom, toInputText, optionSelectedTo}} = route.params;
+  const {
+    toData: {
+      userEmail,
+      fromInputText,
+      optionSelectedFrom,
+      toInputText,
+      optionSelectedTo,
+    },
+  } = route.params;
   const [isDesabledNextBtn, setIsDesabledNextBtn] = useState(true);
   const [inputDate, setInputDate] = useState('');
 
-  useEffect(() => {
-    console.log('inputTo: ' + fromInputText);
-    console.log('inputFrom: ' + toInputText);
-    console.log('option selected From: ');
-    console.log(optionSelectedFrom);
-    console.log('option selected To: ');
-    console.log(optionSelectedTo);
-  }, []);
-
   const handleChangeDate = day => {
-    const date = new Date(day.dateString);
+    const date = new Date(`${day.dateString}T00:00:00`);
     const options = {
       month: 'long',
       day: 'numeric',
@@ -34,11 +33,11 @@ export const DateFlightScreen3 = ({navigation, route}) => {
     const dateText = date.toLocaleDateString('en-US', options);
     setInputDate(dateText);
     setIsDesabledNextBtn(false);
-    console.log(dateText);
   };
 
   const goToNextPage = () => {
     const dateData = {
+      userEmail,
       fromInputText,
       optionSelectedFrom,
       toInputText,

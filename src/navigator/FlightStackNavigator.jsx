@@ -8,7 +8,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const Stack = createStackNavigator();
 
-export const FlightStackNavigator = () => {
+export const FlightStackNavigator = ({route}) => {
   return (
     <Stack.Navigator
       screenOptions={({navigation}) => ({
@@ -25,7 +25,7 @@ export const FlightStackNavigator = () => {
         cardStyle: {backgroundColor: 'white'},
         headerStyle: {elevation: 0, shadowColor: 'transparent'},
       })}>
-      <Stack.Screen name="FromScreen" component={FromFlightScreen1} />
+      <Stack.Screen name="FromScreen" initialParams={route.params} component={FromFlightScreen1} />
       <Stack.Screen name="ToScreen" component={ToFlightScreen2} />
       <Stack.Screen name="DateScreen" component={DateFlightScreen3} />
       <Stack.Screen

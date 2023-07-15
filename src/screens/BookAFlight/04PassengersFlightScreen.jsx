@@ -11,17 +11,26 @@ import {ToContent} from '../../components/Flights/ToContent';
 const {width, height} = Dimensions.get('window');
 
 export const PassengersFlightScreen4 = ({navigation, route}) => {
-  const {dateData: {fromInputText, optionSelectedFrom, toInputText, optionSelectedTo, inputDate}} = route.params;
+  const {
+    dateData: {
+      userEmail,
+      fromInputText,
+      optionSelectedFrom,
+      toInputText,
+      optionSelectedTo,
+      inputDate,
+    },
+  } = route.params;
   const [isDesabledSignupBtn, setIsDesabledSignupBtn] = useState(true);
   const [optionSelected, setOptionSelected] = useState('1');
 
-  const handleChangePicker = (val) => {
+  const handleChangePicker = val => {
     setOptionSelected(val);
-    console.log('passengers:', val);
   };
 
   const goToNextPage = () => {
     const passengersData = {
+      userEmail,
       fromInputText,
       optionSelectedFrom,
       toInputText,

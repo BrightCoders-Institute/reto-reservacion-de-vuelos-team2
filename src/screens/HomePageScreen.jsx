@@ -48,6 +48,13 @@ export const HomePageScreen = ({navigation}) => {
     navigation.navigate('SignUpScreen');
   };
 
+  const goToFlightStackNavigator = () => {
+    const homePageData = {
+      userEmail: user.email,
+    };
+    navigation.navigate('FlightStackNavigator', {homePageData});
+  };
+
   return (
     <View style={styles.homePageContainer}>
       <Text style={styles.homePageTitle}>My flights</Text>
@@ -56,7 +63,7 @@ export const HomePageScreen = ({navigation}) => {
         <CardComponent />
         <CardComponent />
       </View>
-      <FloatButtonComponent navigation={navigation} />
+      <FloatButtonComponent onPressFn={goToFlightStackNavigator} />
       <Button title="SignOff" onPress={handleLogOut} />
     </View>
   );
