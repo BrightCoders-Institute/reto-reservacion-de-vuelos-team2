@@ -6,13 +6,12 @@
  */
 
 import 'react-native-gesture-handler';
-import { NavigationContainer } from '@react-navigation/native';
-import { StackNavigator } from './src/navigator/StackNavigator';
+import {NavigationContainer} from '@react-navigation/native';
+import {StackNavigator} from './src/navigator/StackNavigator';
 import React, {useEffect} from 'react';
-import {View} from 'react-native';
 import {collection, getDocs} from 'firebase/firestore';
 import {database} from './src/db/firebase';
-import { SignUpScreen } from './src/screens/SignUpScreen';
+import {SignUpScreen} from './src/screens/SignUpScreen';
 import firestore from '@react-native-firebase/firestore';
 
 async function fethData() {
@@ -31,8 +30,11 @@ function App(): JSX.Element {
 
   const getUser = async () => {
     // const users = await firestore().collection('users').get();
-    const users = await firestore().collection('users').doc('DZCIDhF1RnCzbHwflrQB').get();
-    console.log(users._data.name);
+    const users = await firestore()
+      .collection('users')
+      .doc('DZCIDhF1RnCzbHwflrQB')
+      .get();
+    console.log(users.data.name);
   };
 
   return (

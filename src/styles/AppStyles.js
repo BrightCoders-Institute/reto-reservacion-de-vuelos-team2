@@ -151,10 +151,10 @@ export const styles = StyleSheet.create({
     color: 'red',
     fontSize: 12,
     marginBottom: 10,
-    marginLeft: 5
+    marginLeft: 5,
   },
 
-  // -------------------- ESTILOS LOADER --------------------
+  // -------------------- STYLES LOADER --------------------
   loderContainer: {
     flex: 1,
     justifyContent: 'center',
@@ -175,14 +175,13 @@ export const styles = StyleSheet.create({
     marginBottom: 100,
   },
 
-  // -------------------- ESTILOS FLIGHT SCREENS --------------------
+  // -------------------- STYLES FLIGHT SCREENS --------------------
   fromFlightContainer: {
     flex: 1,
     justifyContent: 'space-between',
     marginRight: 35,
     marginLeft: 35,
     marginTop: 20,
-    paddingBottom: 42,
   },
   titleFlight: {
     fontSize: 33,
@@ -191,7 +190,8 @@ export const styles = StyleSheet.create({
     color: 'black',
   },
   textFieldFlight: {
-    marginBottom: 295,
+    // marginBottom: 295,
+    marginTop: 90,
     borderBottomWidth: 1,
     borderBottomColor: '#909090',
   },
@@ -254,7 +254,7 @@ export const styles = StyleSheet.create({
     borderRadius: 100,
     elevation: 8,
   },
-  // -------------------- ESTILOS FLIGHT SCREENS --------------------
+  // -------------------- STYLES FLIGHT SCREENS --------------------
   homePageContainer: {
     padding: 15,
     backgroundColor: '#fff',
@@ -270,5 +270,20 @@ export const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     gap: 16,
+  },
+  airportFlatListElement: {
+    height: 50,
+    borderBottomWidth: 1,
+    borderRightWidth: 1,
+    borderLeftWidth: 1,
+    borderColor: '#E1E1E1',
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderRadius: 5,
+  },
+  textInputContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
   },
 });

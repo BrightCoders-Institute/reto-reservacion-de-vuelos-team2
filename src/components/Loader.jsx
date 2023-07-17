@@ -15,9 +15,19 @@ export const Loader = ({
       if (isSuccess) {
         return (
           <View>
-            <Icon name="check-circle" size={95} color="#607AEE" style={{textAlign: 'center'}} />
+            <Icon
+              name="check-circle"
+              size={95}
+              color="#607AEE"
+              style={{textAlign: 'center'}}
+            />
             <Text
-              style={{color: '#607AEE', marginTop: 20, textAlign: 'center', fontSize: 16}}>
+              style={{
+                color: '#607AEE',
+                marginTop: 20,
+                textAlign: 'center',
+                fontSize: 16,
+              }}>
               {loadingFinishText}
             </Text>
           </View>
@@ -25,8 +35,20 @@ export const Loader = ({
       } else {
         return (
           <View>
-            <Icon name="x-circle" size={95} color="#FF0909" style={{textAlign: 'center'}} />
-            <Text style={{color: '#FF0909', marginTop: 20, textAlign: 'center', fontWeight: 'bold', fontSize: 18}}>
+            <Icon
+              name="x-circle"
+              size={95}
+              color="#FF0909"
+              style={{textAlign: 'center'}}
+            />
+            <Text
+              style={{
+                color: '#FF0909',
+                marginTop: 20,
+                textAlign: 'center',
+                fontWeight: 'bold',
+                fontSize: 18,
+              }}>
               {loadingFinishText}
             </Text>
           </View>
@@ -39,7 +61,12 @@ export const Loader = ({
           <View>
             <ActivityIndicator size={110} color="#607AEE" />
             <Text
-              style={{color: '#607AEE', marginTop: 20, textAlign: 'center', fontSize: 16}}>
+              style={{
+                color: '#607AEE',
+                marginTop: 20,
+                textAlign: 'center',
+                fontSize: 16,
+              }}>
               {loadingText}
             </Text>
           </View>
