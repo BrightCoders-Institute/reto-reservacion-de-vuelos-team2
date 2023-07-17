@@ -6,11 +6,13 @@ import {styles} from '../styles/AppStyles';
 import auth from '@react-native-firebase/auth';
 import {CardComponent} from '../components/Flights/CardComponent';
 import {FloatButtonComponent} from '../components/Flights/FloatButtonComponent';
+import firestore from '@react-native-firebase/firestore';
 
 export const HomePageScreen = ({navigation}) => {
   // Set an initializing state whilst Firebase connects
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
+  const [flights, setFlights] = useState([]);
 
   // Handle user state changes
   function onAuthStateChanged(user) {
@@ -25,17 +27,11 @@ export const HomePageScreen = ({navigation}) => {
     return subscriber; // unsubscribe on unmount
   }, []);
 
-  if (initializing) {
-    return null;
-  }
-
-  if (!user) {
-    return (
-      <View>
-        <Text>Home Page</Text>
-      </View>
-    );
-  }
+  useEffect(() => {
+    if (user) {
+      getFlights();
+    }
+  }, [user]);
 
   const logOff = () => {
     auth()
@@ -55,14 +51,33 @@ export const HomePageScreen = ({navigation}) => {
     navigation.navigate('FlightStackNavigator', {homePageData});
   };
 
+  const getFlights = async () => {
+    try {
+      const snapshot = await firestore()
+        .collection('flights')
+        .where('userEmail', '==', user.email)
+        .get();
+
+      const flightsData = snapshot.docs.map(doc => doc.data());
+      setFlights(flightsData);
+      console.log(flightsData);
+    } catch (error) {
+      console.error('Error al obtener los vuelos:', error);
+    }
+  };
+
   return (
     <View style={styles.homePageContainer}>
       <Text style={styles.homePageTitle}>My flights</Text>
       {/* Change for a flatlist */}
-      <View style={styles.cardsContainer}>
-        <CardComponent />
-        <CardComponent />
-      </View>
+      {flights.length !== 0 ? (
+        <View style={styles.cardsContainer}>
+          <CardComponent />
+          <CardComponent />
+        </View>
+      ) : (
+        <Text>No flights found</Text>
+      )}
       <FloatButtonComponent onPressFn={goToFlightStackNavigator} />
       <Button title="SignOff" onPress={handleLogOut} />
     </View>
