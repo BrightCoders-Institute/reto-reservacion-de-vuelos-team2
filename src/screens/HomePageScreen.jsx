@@ -66,15 +66,18 @@ export const HomePageScreen = ({navigation}) => {
     }
   };
 
+  const returnCardComponents = () => {
+    return flights.map((flight, idx) => (
+      <CardComponent key={idx} data={flight} />
+    ));
+  };
+
   return (
     <View style={styles.homePageContainer}>
       <Text style={styles.homePageTitle}>My flights</Text>
       {/* Change for a flatlist */}
       {flights.length !== 0 ? (
-        <View style={styles.cardsContainer}>
-          <CardComponent />
-          <CardComponent />
-        </View>
+        returnCardComponents()
       ) : (
         <Text>No flights found</Text>
       )}
