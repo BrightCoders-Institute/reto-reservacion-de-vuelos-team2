@@ -76,17 +76,7 @@ export const HomePageScreen = ({navigation}) => {
     <View style={styles.homePageContainer}>
       <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
         <Text style={styles.homePageTitle}>My flights</Text>
-        <TouchableOpacity
-          onPress={handleLogOut}
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'center',
-            backgroundColor: '#899FFF',
-            height: 40,
-            width: 100,
-            borderRadius: 12,
-          }}>
+        <TouchableOpacity onPress={handleLogOut} style={styles.buttonLogOut}>
           <Text style={[styles.buttonText, {fontSize: 14}]}>Log Out</Text>
         </TouchableOpacity>
       </View>
