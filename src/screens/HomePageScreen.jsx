@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-shadow */
 import React, {useState, useEffect} from 'react';
-import {View, Text, Button, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity, FlatList} from 'react-native';
 import {styles} from '../styles/AppStyles';
 import auth from '@react-native-firebase/auth';
 import {CardComponent} from '../components/Flights/CardComponent';
@@ -66,12 +66,6 @@ export const HomePageScreen = ({navigation}) => {
     }
   };
 
-  const returnCardComponents = () => {
-    return flights.map((flight, idx) => (
-      <CardComponent key={idx} data={flight} />
-    ));
-  };
-
   return (
     <View style={styles.homePageContainer}>
       <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -82,7 +76,11 @@ export const HomePageScreen = ({navigation}) => {
       </View>
       {/* Change for a flatlist */}
       {flights.length !== 0 ? (
-        returnCardComponents()
+        <FlatList
+          data={flights}
+          renderItem={({item}) => <CardComponent key={item.id} data={item} />}
+          keyExtractor={flights => flights.id}
+        />
       ) : (
         <Text>No flights found</Text>
       )}

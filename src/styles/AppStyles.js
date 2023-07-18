@@ -268,6 +268,7 @@ export const styles = StyleSheet.create({
   homePageContainer: {
     padding: 15,
     backgroundColor: '#fff',
+    height: '100%',
   },
   homePageTitle: {
     color: '#899FFF',

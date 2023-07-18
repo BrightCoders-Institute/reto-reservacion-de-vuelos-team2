@@ -22,7 +22,11 @@ export const CardComponent = ({navigation, data}) => {
 
       <View style={styles.bottomContainer}>
         <Text style={styles.infoText}>{data.date}</Text>
-        <Text style={[styles.infoText, styles.textRight]}>{`${data.passengers} passengers`}</Text>
+        <Text
+          style={[
+            styles.infoText,
+            styles.textRight,
+          ]}>{`${data.passengers} passengers`}</Text>
       </View>
     </View>
   );
