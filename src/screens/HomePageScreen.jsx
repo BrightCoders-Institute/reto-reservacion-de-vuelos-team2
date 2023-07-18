@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-shadow */
 import React, {useState, useEffect} from 'react';
-import {View, Text, Button} from 'react-native';
+import {View, Text, Button, TouchableOpacity} from 'react-native';
 import {styles} from '../styles/AppStyles';
 import auth from '@react-native-firebase/auth';
 import {CardComponent} from '../components/Flights/CardComponent';
@@ -74,7 +74,22 @@ export const HomePageScreen = ({navigation}) => {
 
   return (
     <View style={styles.homePageContainer}>
-      <Text style={styles.homePageTitle}>My flights</Text>
+      <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+        <Text style={styles.homePageTitle}>My flights</Text>
+        <TouchableOpacity
+          onPress={handleLogOut}
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: '#899FFF',
+            height: 40,
+            width: 100,
+            borderRadius: 12,
+          }}>
+          <Text style={[styles.buttonText, {fontSize: 14}]}>Log Out</Text>
+        </TouchableOpacity>
+      </View>
       {/* Change for a flatlist */}
       {flights.length !== 0 ? (
         returnCardComponents()
@@ -82,7 +97,6 @@ export const HomePageScreen = ({navigation}) => {
         <Text>No flights found</Text>
       )}
       <FloatButtonComponent onPressFn={goToFlightStackNavigator} />
-      <Button title="SignOff" onPress={handleLogOut} />
     </View>
   );
 };
