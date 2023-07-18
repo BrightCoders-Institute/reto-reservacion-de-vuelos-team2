@@ -1,18 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-shadow */
-import React, {useState, useEffect} from 'react';
-import {View, Text, Button} from 'react-native';
+import React, {useState, useEffect, useCallback} from 'react';
+import {View, Text, TouchableOpacity, FlatList} from 'react-native';
 import {styles} from '../styles/AppStyles';
 import auth from '@react-native-firebase/auth';
 import {CardComponent} from '../components/Flights/CardComponent';
 import {FloatButtonComponent} from '../components/Flights/FloatButtonComponent';
+import firestore from '@react-native-firebase/firestore';
+import {useFocusEffect} from '@react-navigation/native';
 
 export const HomePageScreen = ({navigation}) => {
-  // Set an initializing state whilst Firebase connects
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
+  const [flights, setFlights] = useState([]);
 
-  // Handle user state changes
   function onAuthStateChanged(user) {
     setUser(user);
     if (initializing) {
@@ -22,20 +23,16 @@ export const HomePageScreen = ({navigation}) => {
 
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-    return subscriber; // unsubscribe on unmount
+    return subscriber;
   }, []);
 
-  if (initializing) {
-    return null;
-  }
-
-  if (!user) {
-    return (
-      <View>
-        <Text>Home Page</Text>
-      </View>
-    );
-  }
+  useFocusEffect(
+    useCallback(() => {
+      if (user) {
+        getFlights();
+      }
+    }, [user]),
+  );
 
   const logOff = () => {
     auth()
@@ -55,16 +52,39 @@ export const HomePageScreen = ({navigation}) => {
     navigation.navigate('FlightStackNavigator', {homePageData});
   };
 
+  const getFlights = async () => {
+    try {
+      const snapshot = await firestore()
+        .collection('flights')
+        .where('userEmail', '==', user.email)
+        .get();
+
+      const flightsData = snapshot.docs.map(doc => doc.data());
+      setFlights(flightsData);
+      console.log(flightsData);
+    } catch (error) {
+      console.error('Error al obtener los vuelos:', error);
+    }
+  };
+
   return (
     <View style={styles.homePageContainer}>
-      <Text style={styles.homePageTitle}>My flights</Text>
-      {/* Change for a flatlist */}
-      <View style={styles.cardsContainer}>
-        <CardComponent />
-        <CardComponent />
+      <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+        <Text style={styles.homePageTitle}>My flights</Text>
+        <TouchableOpacity onPress={handleLogOut} style={styles.buttonLogOut}>
+          <Text style={[styles.buttonText, {fontSize: 14}]}>Log Out</Text>
+        </TouchableOpacity>
       </View>
+      {flights.length !== 0 ? (
+        <FlatList
+          data={flights}
+          renderItem={({item}) => <CardComponent key={item.id} data={item} />}
+          keyExtractor={flights => flights.id}
+        />
+      ) : (
+        <Text>No flights found</Text>
+      )}
       <FloatButtonComponent onPressFn={goToFlightStackNavigator} />
-      <Button title="SignOff" onPress={handleLogOut} />
     </View>
   );
 };

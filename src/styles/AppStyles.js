@@ -66,6 +66,15 @@ export const styles = StyleSheet.create({
     width: '100%',
     height: 50,
   },
+  buttonLogOut: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#899FFF',
+    height: 40,
+    width: 100,
+    borderRadius: 12,
+  },
   btnEnabled: {
     backgroundColor: '#899FFF',
   },
@@ -239,6 +248,7 @@ export const styles = StyleSheet.create({
   cardContainer: {
     borderBottomColor: '#000000',
     borderBottomWidth: 1,
+    marginTop: 15,
   },
   flightButton: {
     borderWidth: 1,
@@ -258,6 +268,7 @@ export const styles = StyleSheet.create({
   homePageContainer: {
     padding: 15,
     backgroundColor: '#fff',
+    height: '100%',
   },
   homePageTitle: {
     color: '#899FFF',

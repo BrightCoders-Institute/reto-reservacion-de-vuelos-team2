@@ -10,19 +10,23 @@ export const CardComponent = ({navigation, data}) => {
     <View style={styles.cardContainer}>
       <View style={[styles.topContainer, styles.underlineContainer]}>
         <View style={styles.ToFromContainer}>
-          <FromContent />
+          <FromContent abbr={data.fromAbbr} country={data.fromCountry} />
         </View>
 
         <Icon name="airplane" size={25} color="#899FFF" />
 
         <View style={styles.ToFromContainer}>
-          <ToContent />
+          <ToContent abbr={data.toAbbr} country={data.toCountry} />
         </View>
       </View>
 
       <View style={styles.bottomContainer}>
-        <Text style={styles.infoText}>September 3, 2020</Text>
-        <Text style={[styles.infoText, styles.textRight]}>2 passengers</Text>
+        <Text style={styles.infoText}>{data.date}</Text>
+        <Text
+          style={[
+            styles.infoText,
+            styles.textRight,
+          ]}>{`${data.passengers} passengers`}</Text>
       </View>
     </View>
   );
