@@ -7,6 +7,7 @@ import auth from '@react-native-firebase/auth';
 import {CardComponent} from '../components/Flights/CardComponent';
 import {FloatButtonComponent} from '../components/Flights/FloatButtonComponent';
 import firestore from '@react-native-firebase/firestore';
+import {useFocusEffect} from '@react-navigation/native';
 
 export const HomePageScreen = ({navigation}) => {
   // Set an initializing state whilst Firebase connects
@@ -27,11 +28,13 @@ export const HomePageScreen = ({navigation}) => {
     return subscriber; // unsubscribe on unmount
   }, []);
 
-  useEffect(() => {
-    if (user) {
-      getFlights();
-    }
-  }, [user]);
+  useFocusEffect(
+    React.useCallback(() => {
+      if (user) {
+        getFlights();
+      }
+    }, [user]),
+  );
 
   const logOff = () => {
     auth()
