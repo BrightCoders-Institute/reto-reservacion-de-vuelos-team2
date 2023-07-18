@@ -11,6 +11,7 @@ import {useForm} from '../hooks/useForm';
 import {useEmailPassValidation} from '../hooks/useEmailPassValidation';
 import {useShowHidePassword} from '../hooks/useShowHidePassword';
 import {Loader} from '../components/Loader';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 GoogleSignin.configure({
   webClientId:
@@ -166,7 +167,7 @@ export const SignUpScreen = ({navigation}) => {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Loader
         openModal={isLoadingDisplayed}
         loadingText="Signing up..."
@@ -278,6 +279,6 @@ export const SignUpScreen = ({navigation}) => {
           </Text>
         </Pressable>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };

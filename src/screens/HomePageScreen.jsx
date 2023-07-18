@@ -8,6 +8,7 @@ import {CardComponent} from '../components/Flights/CardComponent';
 import {FloatButtonComponent} from '../components/Flights/FloatButtonComponent';
 import firestore from '@react-native-firebase/firestore';
 import {useFocusEffect} from '@react-navigation/native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export const HomePageScreen = ({navigation}) => {
   const [initializing, setInitializing] = useState(true);
@@ -68,7 +69,7 @@ export const HomePageScreen = ({navigation}) => {
   };
 
   return (
-    <View style={styles.homePageContainer}>
+    <SafeAreaView style={styles.homePageContainer}>
       <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
         <Text style={styles.homePageTitle}>My flights</Text>
         <TouchableOpacity onPress={handleLogOut} style={styles.buttonLogOut}>
@@ -85,6 +86,6 @@ export const HomePageScreen = ({navigation}) => {
         <Text>No flights found</Text>
       )}
       <FloatButtonComponent onPressFn={goToFlightStackNavigator} />
-    </View>
+    </SafeAreaView>
   );
 };

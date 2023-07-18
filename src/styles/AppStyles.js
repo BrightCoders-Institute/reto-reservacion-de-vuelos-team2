@@ -258,7 +258,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     bottom: 30,
-    right: 170,
+    right: 185,
     backgroundColor: '#899FFF',
     borderColor: '#899FFF',
     borderRadius: 100,
@@ -267,7 +267,7 @@ export const styles = StyleSheet.create({
   // -------------------- STYLES FLIGHT SCREENS --------------------
   homePageContainer: {
     padding: 15,
-    backgroundColor: '#fff',
+    // backgroundColor: '#fff',
     height: '100%',
   },
   homePageTitle: {
