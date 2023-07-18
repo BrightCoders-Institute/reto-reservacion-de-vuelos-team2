@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-shadow */
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {View, Text, TouchableOpacity, FlatList} from 'react-native';
 import {styles} from '../styles/AppStyles';
 import auth from '@react-native-firebase/auth';
@@ -10,12 +10,10 @@ import firestore from '@react-native-firebase/firestore';
 import {useFocusEffect} from '@react-navigation/native';
 
 export const HomePageScreen = ({navigation}) => {
-  // Set an initializing state whilst Firebase connects
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
   const [flights, setFlights] = useState([]);
 
-  // Handle user state changes
   function onAuthStateChanged(user) {
     setUser(user);
     if (initializing) {
@@ -25,11 +23,11 @@ export const HomePageScreen = ({navigation}) => {
 
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-    return subscriber; // unsubscribe on unmount
+    return subscriber;
   }, []);
 
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       if (user) {
         getFlights();
       }
@@ -77,7 +75,6 @@ export const HomePageScreen = ({navigation}) => {
           <Text style={[styles.buttonText, {fontSize: 14}]}>Log Out</Text>
         </TouchableOpacity>
       </View>
-      {/* Change for a flatlist */}
       {flights.length !== 0 ? (
         <FlatList
           data={flights}
