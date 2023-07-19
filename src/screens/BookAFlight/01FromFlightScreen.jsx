@@ -42,7 +42,7 @@ export const FromFlightScreen1 = ({navigation, route}) => {
         setAirportsData(arrayAirports);
       })
       .catch(error => {
-        console.log('Error al obtener los documentos:', error);
+        console.log('Error al obtener los airports:', error);
       });
   };
 

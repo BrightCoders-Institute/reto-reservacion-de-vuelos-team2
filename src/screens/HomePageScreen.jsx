@@ -60,9 +60,12 @@ export const HomePageScreen = ({navigation}) => {
         .where('userEmail', '==', user.email)
         .get();
 
-      const flightsData = snapshot.docs.map(doc => doc.data());
+      const flightsData = [];
+      snapshot.forEach(doc => {
+        const flight = {...doc._data, id: doc.id};
+        flightsData.push(flight);
+      });
       setFlights(flightsData);
-      console.log(flightsData);
     } catch (error) {
       console.error('Error al obtener los vuelos:', error);
     }
