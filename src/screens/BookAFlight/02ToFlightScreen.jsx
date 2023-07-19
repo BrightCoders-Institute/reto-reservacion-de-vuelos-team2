@@ -34,9 +34,7 @@ export const ToFlightScreen2 = ({navigation, route}) => {
   const getToOptions = () => {
     const selectedOption = optionSelectedFrom;
     const newOptions = airportsData.filter(
-      item =>
-        item.city !== selectedOption.city &&
-        item.country !== selectedOption.country,
+      item => item.city !== selectedOption.city,
     );
     setNewAirportsData(newOptions);
   };
@@ -47,8 +45,8 @@ export const ToFlightScreen2 = ({navigation, route}) => {
     if (text.trim() !== '') {
       const filteredOptions = newAirportsData.filter(
         item =>
-          item.city.toLowerCase().includes(text.toLowerCase()) ||
-          item.country.toLowerCase().includes(text.toLowerCase()),
+          item.city.toLowerCase().startsWith(text.toLowerCase()) ||
+          item.country.toLowerCase().startsWith(text.toLowerCase()),
       );
       setMatchedOptions(filteredOptions);
     } else {
