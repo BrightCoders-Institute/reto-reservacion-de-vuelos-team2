@@ -1,7 +1,7 @@
 import React from 'react';
 import {TouchableOpacity} from 'react-native';
 import {styles} from '../../styles/AppStyles';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 
 export const FloatButtonComponent = ({onPressFn}) => {
   return (
@@ -9,7 +9,7 @@ export const FloatButtonComponent = ({onPressFn}) => {
       style={styles.flightButton}
       activeOpacity={0.7}
       onPress={onPressFn}>
-      <Icon name="add" size={30} color="#fff" />
+      <Icon name="plus" size={35} color="#fff" />
     </TouchableOpacity>
   );
 };

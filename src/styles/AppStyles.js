@@ -199,10 +199,16 @@ export const styles = StyleSheet.create({
     color: 'black',
   },
   textFieldFlight: {
-    // marginBottom: 295,
     marginTop: 90,
     borderBottomWidth: 1,
     borderBottomColor: '#909090',
+  },
+  textNotFound: {
+    textAlign: 'center',
+    fontSize: 20,
+    fontWeight: 'bold',
+    letterSpacing: 1,
+    color: '#909090',
   },
   topContainer: {
     display: 'flex',
@@ -219,7 +225,8 @@ export const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingVertical: 8,
+    marginTop: 8,
+    marginBottom: 18,
   },
   ToFromContainer: {
     display: 'flex',
@@ -249,16 +256,16 @@ export const styles = StyleSheet.create({
     borderBottomColor: '#000000',
     borderBottomWidth: 1,
     marginTop: 15,
+    marginHorizontal: 13,
   },
   flightButton: {
     borderWidth: 1,
     position: 'absolute',
-    width: 50,
-    height: 50,
+    width: 80,
+    height: 80,
     alignItems: 'center',
     justifyContent: 'center',
-    bottom: 30,
-    right: 170,
+    bottom: 5,
     backgroundColor: '#899FFF',
     borderColor: '#899FFF',
     borderRadius: 100,
@@ -266,8 +273,8 @@ export const styles = StyleSheet.create({
   },
   // -------------------- STYLES FLIGHT SCREENS --------------------
   homePageContainer: {
+    flex: 1,
     padding: 15,
-    backgroundColor: '#fff',
     height: '100%',
   },
   homePageTitle: {

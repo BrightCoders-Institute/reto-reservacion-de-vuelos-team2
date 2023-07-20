@@ -42,7 +42,7 @@ export const FromFlightScreen1 = ({navigation, route}) => {
         setAirportsData(arrayAirports);
       })
       .catch(error => {
-        console.log('Error al obtener los documentos:', error);
+        console.log('Error al obtener los airports:', error);
       });
   };
 
@@ -52,8 +52,8 @@ export const FromFlightScreen1 = ({navigation, route}) => {
     if (text.trim() !== '') {
       const filteredOptions = airportsData.filter(
         item =>
-          item.city.toLowerCase().includes(text.toLowerCase()) ||
-          item.country.toLowerCase().includes(text.toLowerCase()),
+          item.city.toLowerCase().startsWith(text.toLowerCase()) ||
+          item.country.toLowerCase().startsWith(text.toLowerCase()),
       );
       setMatchedOptions(filteredOptions);
     } else {

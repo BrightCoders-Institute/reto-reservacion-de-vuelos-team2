@@ -1,20 +1,63 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/aIsUCqbr)
 ![BrightCoders Logo](img/logo.png)
 
-# 🥷 Reto de Programación
+## 🛫 Flight Booking App 🛫
 
-## App reservación de vuelos
+![Badge en Desarollo](https://img.shields.io/badge/STATUS-EN%20DESAROLLO-green)
 
-> [Ver instrucciones antes de iniciar](./instructions/instructions.md)
+## Table of contents
+- [Description of project](#Description-of-project)
+- [How to Install and Run the Project](#How-to-Install-and-Run-the-Project.)
+- [Tools used](#Tools-used)
+- [Credits](#Credits)
+- [Badges](#Badges)
 
-This README would normally document whatever steps are necessary to get the application up and running.
+## 💻 Description of project
+The project consists of developing a mobile application for ABC Corp, which will allow customers to easily and conveniently register their flight reservations. The application will be available for both iOS and Android devices.
 
-Things you may want to cover:
+To store the information of registered users and flight reservations, the application will use Firebase as the database. Users will have the option to register using their name, email, and password, or through their Google account. Once registered, they can log in to the application using their credentials.
 
-- Title or Project Name
-- Table of contents
-- Description. A brief description of what the project is about
-- How to Install and Run the Project.
-- How to Use the Project.
-- Credits
-- Badges
+Once users have logged in, they will be able to access a list of their flight reservations retrieved from Firebase. Additionally, they will have the ability to add new reservations by providing flight details such as origin, destination, date, and number of passengers. All this information will be saved in Firebase for future reference.
+
+
+## 📂 How to Install and Run the Project
+
+The first and most important step is to clone the remote repository to run it locally.
+
+```
+git clone [repository URL]
+```
+
+Next, the next step will be to install dependencies and modules required by the project to run correctly.
+
+```
+npm install
+```
+To execute the main functionality of the program, you should run the following command in the terminal:
+
+```
+npx react-native run-android
+```
+
+or 
+
+```
+npx react-native run-ios
+```
+
+## ⚒️ Tools used
+- JavaScript
+- React Native
+- Firebase
+- ESLint 
+- Jest 
+- Codacy
+
+## Credits
+
+| [<img src="https://avatars.githubusercontent.com/u/116055107?v=4" width=115><br><sub>Montserrat Aguilar Valle</sub>](https://github.com/montsegv-2) | [<img src="https://avatars.githubusercontent.com/u/47892591?v=4" width=115><br><sub>Alberto García Martínez</sub>](https://github.com/AlbertoG22) | [<img src="https://avatars.githubusercontent.com/u/70121105?v=4" width=115><br><sub>Alfredo Paz</sub>](https://github.com/Alfredo20164920)
+| :---: | :---: | :---: |
+
+## Badges
+| Analizador | Calificación|
+| ----- | ---- |
+| Codacy | example |
